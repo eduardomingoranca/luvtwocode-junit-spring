@@ -4,6 +4,8 @@ import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+// alterando para um texto cada metodo que tiver o underscore
+@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class DemoUtilsTest {
 
     DemoUtils demoUtils;
@@ -15,16 +17,16 @@ class DemoUtilsTest {
 
     @Test
     // alterando o nome do metodo para um texto
-    @DisplayName("Equals and Not Equals")
-    void test_EqualsAndNotEquals() {
+    // @DisplayName("Equals and Not Equals")
+    void test_Equals_And_Not_Equals() {
 
         assertEquals(6, demoUtils.add(2, 4), "2+4 must be 6");
         assertNotEquals(6, demoUtils.add(1, 9), "1+9 must not be 6");
     }
 
     @Test
-    @DisplayName("Null and Not Null")
-    void testNullAndNotNull() {
+    // @DisplayName("Null and Not Null")
+    void test_Null_And_Not_Null() {
 
         String str1 = null;
         String str2 = "luv2code";
