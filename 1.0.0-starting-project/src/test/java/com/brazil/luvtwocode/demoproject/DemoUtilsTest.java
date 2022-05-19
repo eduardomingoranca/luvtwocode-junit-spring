@@ -4,8 +4,6 @@ import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-// alterando para um texto cada metodo que tiver o underscore
-@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class DemoUtilsTest {
 
     DemoUtils demoUtils;
@@ -17,7 +15,7 @@ class DemoUtilsTest {
 
     @Test
     // alterando o nome do metodo para um texto
-    // @DisplayName("Equals and Not Equals")
+    @DisplayName("Equals and Not Equals")
     void test_Equals_And_Not_Equals() {
 
         assertEquals(6, demoUtils.add(2, 4), "2+4 must be 6");
@@ -25,7 +23,7 @@ class DemoUtilsTest {
     }
 
     @Test
-    // @DisplayName("Null and Not Null")
+    @DisplayName("Null and Not Null")
     void test_Null_And_Not_Null() {
 
         String str1 = null;
@@ -35,8 +33,26 @@ class DemoUtilsTest {
         assertNotNull(demoUtils.checkNull(str2), "Object should be not null");
     }
 
-    /*
+    @DisplayName("Same and Not Same")
+    @Test
+    void testSameAndNotSame() {
+        String str = "luv2code";
 
+        assertSame(demoUtils.getAcademy(), demoUtils.getAcademyDuplicate(), "Objects should refer to same object");
+        assertNotSame(str, demoUtils.getAcademy(), "Objects should not refer to same object");
+    }
+
+    @DisplayName("True and False")
+    @Test
+    void testTrueFalse() {
+        int gradeOne = 10;
+        int gradeTwo = 5;
+
+        assertTrue(demoUtils.isGreater(gradeOne, gradeTwo), "This should return true");
+        assertFalse(demoUtils.isGreater(gradeTwo, gradeOne), "This should return false");
+    }
+
+    /*
     @AfterEach
     void tearDownAfterEach() {
         System.out.println("Running @AfterEach");
