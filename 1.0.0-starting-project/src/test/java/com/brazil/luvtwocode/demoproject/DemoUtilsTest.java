@@ -20,6 +20,12 @@ class DemoUtilsTest {
         demoUtils = new DemoUtils();
     }
 
+    @DisplayName("Multiply")
+    @Test
+    void testMultiply() {
+        assertEquals(12, demoUtils.multiply(4, 3), "4*3 must be 12");
+    }
+
     @Test
     // alterando o nome do metodo para um texto
     @DisplayName("Equals and Not Equals")
