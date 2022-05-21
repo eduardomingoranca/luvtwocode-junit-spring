@@ -8,6 +8,9 @@ import static java.time.Duration.ofSeconds;
 import static java.util.List.of;
 import static org.junit.jupiter.api.Assertions.*;
 
+//@TestMethodOrder(MethodOrderer.MethodName.class)
+//@TestMethodOrder(MethodOrderer.DisplayName.class)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class DemoUtilsTest {
 
     DemoUtils demoUtils;
@@ -20,6 +23,7 @@ class DemoUtilsTest {
     @Test
     // alterando o nome do metodo para um texto
     @DisplayName("Equals and Not Equals")
+    @Order(1)
     void testEqualsAndNotEquals() {
 
         assertEquals(6, demoUtils.add(2, 4), "2+4 must be 6");
@@ -28,6 +32,7 @@ class DemoUtilsTest {
 
     @Test
     @DisplayName("Null and Not Null")
+    @Order(0)
     void testNullAndNotNull() {
 
         String str1 = null;
@@ -48,6 +53,7 @@ class DemoUtilsTest {
 
     @DisplayName("True and False")
     @Test
+    @Order(30)
     void testTrueFalse() {
         int gradeOne = 10;
         int gradeTwo = 5;
@@ -82,6 +88,7 @@ class DemoUtilsTest {
 
     @DisplayName("Lines match")
     @Test
+    @Order(50)
     void testLinesMatch() {
         List<String> theList = of("luv", "2", "code");
 
