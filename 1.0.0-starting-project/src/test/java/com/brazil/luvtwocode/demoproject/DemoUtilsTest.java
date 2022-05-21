@@ -2,6 +2,9 @@ package com.brazil.luvtwocode.demoproject;
 
 import org.junit.jupiter.api.*;
 
+import java.util.List;
+
+import static java.util.List.of;
 import static org.junit.jupiter.api.Assertions.*;
 
 class DemoUtilsTest {
@@ -16,7 +19,7 @@ class DemoUtilsTest {
     @Test
     // alterando o nome do metodo para um texto
     @DisplayName("Equals and Not Equals")
-    void test_Equals_And_Not_Equals() {
+    void testEqualsAndNotEquals() {
 
         assertEquals(6, demoUtils.add(2, 4), "2+4 must be 6");
         assertNotEquals(6, demoUtils.add(1, 9), "1+9 must not be 6");
@@ -24,7 +27,7 @@ class DemoUtilsTest {
 
     @Test
     @DisplayName("Null and Not Null")
-    void test_Null_And_Not_Null() {
+    void testNullAndNotNull() {
 
         String str1 = null;
         String str2 = "luv2code";
@@ -52,21 +55,26 @@ class DemoUtilsTest {
         assertFalse(demoUtils.isGreater(gradeTwo, gradeOne), "This should return false");
     }
 
-    /*
-    @AfterEach
-    void tearDownAfterEach() {
-        System.out.println("Running @AfterEach");
-        System.out.println();
+    @DisplayName("Array Equals")
+    @Test
+    void testArrayEquals() {
+        String[] stringArray = {"A", "B", "C"};
+
+        assertArrayEquals(stringArray, demoUtils.getFirstThreeLettersOfAlphabet(), "Arrays should be the same");
     }
 
-    @BeforeAll
-    static void setupBeforeAllClass() {
-        System.out.println("@BeforeAll executes only once before all test methods execution in the class");
+    @DisplayName("Iterable equals")
+    @Test
+    void testIterableEquals() {
+        List<String> theList = of("luv", "2", "code");
+        assertIterableEquals(theList, demoUtils.getAcademyInList(), "Expected list should be same as actual list");
     }
 
-    @AfterAll
-    static void tearDownAfterAll() {
-        System.out.println("@AfterAll executes only once before all test methods execution in the class");
-    } */
+    @DisplayName("Lines match")
+    @Test
+    void testLinesMatch() {
+        List<String> theList = of("luv", "2", "code");
+        assertLinesMatch(theList, demoUtils.getAcademyInList(), "Lines should match");
+    }
 
 }
