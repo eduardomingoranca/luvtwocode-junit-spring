@@ -4,6 +4,7 @@ import org.junit.jupiter.api.*;
 
 import java.util.List;
 
+import static java.time.Duration.ofSeconds;
 import static java.util.List.of;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -60,6 +61,7 @@ class DemoUtilsTest {
     void testArrayEquals() {
         String[] stringArray = {"A", "B", "C"};
 
+        // verificando que ambos os arrays de objetos sao iguais.
         assertArrayEquals(stringArray, demoUtils.getFirstThreeLettersOfAlphabet(), "Arrays should be the same");
     }
 
@@ -68,6 +70,13 @@ class DemoUtilsTest {
     void testIterableEquals() {
         List<String> theList = of("luv", "2", "code");
 
+        /**
+         *  verificando que ambos os iteraveis de objeto sao iguais.
+         *  Um iteravel (iterable) e uma instancia de uma classe que
+         *  implementa a interface java.lang.Iterable interface.
+         *
+         *  Example: ArrayList, LinkedList, HashSet, TreeSet ...
+         */
         assertIterableEquals(theList, demoUtils.getAcademyInList(), "Expected list should be same as actual list");
     }
 
@@ -76,6 +85,7 @@ class DemoUtilsTest {
     void testLinesMatch() {
         List<String> theList = of("luv", "2", "code");
 
+        // verificando se ambos as listas de strings correspondem.
         assertLinesMatch(theList, demoUtils.getAcademyInList(), "Lines should match");
     }
 
@@ -85,6 +95,15 @@ class DemoUtilsTest {
 
         assertThrows(Exception.class, () -> { demoUtils.throwException(-1);}, "Should throw exception");
         assertDoesNotThrow(() -> { demoUtils.throwException(5);}, "Should not throw exception");
+    }
+
+    @DisplayName("Timeout")
+    @Test
+    void testTimeout() {
+
+        // verificando o tempo limite preventivamente.
+        assertTimeoutPreemptively(ofSeconds(3), () -> { demoUtils.checkTimeout(); },
+                "Method should execute in 3 seconds");
     }
 
 }
