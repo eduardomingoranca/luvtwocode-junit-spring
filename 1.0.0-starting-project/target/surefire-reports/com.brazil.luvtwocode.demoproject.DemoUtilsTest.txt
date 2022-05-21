@@ -1,8 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.brazil.luvtwocode.demoproject.DemoUtilsTest
 -------------------------------------------------------------------------------
-Tests run: 10, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 2.344 s <<< FAILURE! - in com.brazil.luvtwocode.demoproject.DemoUtilsTest
-com.brazil.luvtwocode.demoproject.DemoUtilsTest.testMultiply  Time elapsed: 0 s  <<< FAILURE!
-org.opentest4j.AssertionFailedError: 4*3 must be 12 ==> expected: <12> but was: <108>
-	at com.brazil.luvtwocode.demoproject.DemoUtilsTest.testMultiply(DemoUtilsTest.java:26)
-
+Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.328 s - in com.brazil.luvtwocode.demoproject.DemoUtilsTest

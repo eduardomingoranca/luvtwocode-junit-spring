@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.brazil.luvtwocode.demoproject.DemoUtilsTest" time="2.344" tests="10" errors="0" skipped="0" failures="1">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.brazil.luvtwocode.demoproject.DemoUtilsTest" time="2.328" tests="10" errors="0" skipped="0" failures="0">
   <properties>
     <property name="sun.desktop" value="windows"/>
     <property name="awt.toolkit" value="sun.awt.windows.WToolkit"/>
@@ -18,7 +18,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="BR"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk-11.0.9\bin"/>
-    <property name="sun.java.command" value="C:\Users\eduar\AppData\Local\Temp\surefire16759764716370679592\surefirebooter4652189195263403101.jar C:\Users\eduar\AppData\Local\Temp\surefire16759764716370679592 2022-05-21T16-54-39_516-jvmRun1 surefire18312215998259979368tmp surefire_016896682592691431096tmp"/>
+    <property name="sun.java.command" value="C:\Users\eduar\AppData\Local\Temp\surefire750071126887763287\surefirebooter14115556656738027147.jar C:\Users\eduar\AppData\Local\Temp\surefire750071126887763287 2022-05-21T17-12-00_867-jvmRun1 surefire3333343608012849055tmp surefire_015242272211501410514tmp"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="C:\Users\eduar\workspace\microservice_course_unit_tests_spring\1.0.0-starting-project\target\test-classes;C:\Users\eduar\workspace\microservice_course_unit_tests_spring\1.0.0-starting-project\target\classes;C:\Users\eduar\.m2\repository\org\junit\jupiter\junit-jupiter\5.8.2\junit-jupiter-5.8.2.jar;C:\Users\eduar\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.8.2\junit-jupiter-api-5.8.2.jar;C:\Users\eduar\.m2\repository\org\opentest4j\opentest4j\1.2.0\opentest4j-1.2.0.jar;C:\Users\eduar\.m2\repository\org\junit\platform\junit-platform-commons\1.8.2\junit-platform-commons-1.8.2.jar;C:\Users\eduar\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\eduar\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.8.2\junit-jupiter-params-5.8.2.jar;C:\Users\eduar\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.8.2\junit-jupiter-engine-5.8.2.jar;C:\Users\eduar\.m2\repository\org\junit\platform\junit-platform-engine\1.8.2\junit-platform-engine-1.8.2.jar;"/>
     <property name="sun.cpu.endian" value="little"/>
@@ -34,7 +34,7 @@
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"/>
-    <property name="surefire.real.class.path" value="C:\Users\eduar\AppData\Local\Temp\surefire16759764716370679592\surefirebooter4652189195263403101.jar"/>
+    <property name="surefire.real.class.path" value="C:\Users\eduar\AppData\Local\Temp\surefire750071126887763287\surefirebooter14115556656738027147.jar"/>
     <property name="user.script" value=""/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="11.0.9+7-LTS"/>
@@ -62,22 +62,18 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="55.0"/>
   </properties>
-  <testcase name="Null and Not Null" classname="com.brazil.luvtwocode.demoproject.DemoUtilsTest" time="0.11"/>
+  <testcase name="Null and Not Null" classname="com.brazil.luvtwocode.demoproject.DemoUtilsTest" time="0.125"/>
   <testcase name="Equals and Not Equals" classname="com.brazil.luvtwocode.demoproject.DemoUtilsTest" time="0"/>
-  <testcase name="True and False" classname="com.brazil.luvtwocode.demoproject.DemoUtilsTest" time="0.016"/>
-  <testcase name="Lines match" classname="com.brazil.luvtwocode.demoproject.DemoUtilsTest" time="0.015"/>
+  <testcase name="True and False" classname="com.brazil.luvtwocode.demoproject.DemoUtilsTest" time="0.015"/>
+  <testcase name="Lines match" classname="com.brazil.luvtwocode.demoproject.DemoUtilsTest" time="0.016"/>
   <testcase name="Timeout" classname="com.brazil.luvtwocode.demoproject.DemoUtilsTest" time="2.016">
     <system-out><![CDATA[I am going to sleep
 Sleeping over
 ]]></system-out>
   </testcase>
-  <testcase name="Same and Not Same" classname="com.brazil.luvtwocode.demoproject.DemoUtilsTest" time="0.016"/>
-  <testcase name="Array Equals" classname="com.brazil.luvtwocode.demoproject.DemoUtilsTest" time="0.015"/>
-  <testcase name="Iterable equals" classname="com.brazil.luvtwocode.demoproject.DemoUtilsTest" time="0.016"/>
-  <testcase name="Multiply" classname="com.brazil.luvtwocode.demoproject.DemoUtilsTest" time="0">
-    <failure type="org.opentest4j.AssertionFailedError"><![CDATA[org.opentest4j.AssertionFailedError: 4*3 must be 12 ==> expected: <12> but was: <108>
-	at com.brazil.luvtwocode.demoproject.DemoUtilsTest.testMultiply(DemoUtilsTest.java:26)
-]]></failure>
-  </testcase>
-  <testcase name="Throws and Does Not Throw" classname="com.brazil.luvtwocode.demoproject.DemoUtilsTest" time="0.015"/>
+  <testcase name="Same and Not Same" classname="com.brazil.luvtwocode.demoproject.DemoUtilsTest" time="0.015"/>
+  <testcase name="Array Equals" classname="com.brazil.luvtwocode.demoproject.DemoUtilsTest" time="0.016"/>
+  <testcase name="Iterable equals" classname="com.brazil.luvtwocode.demoproject.DemoUtilsTest" time="0"/>
+  <testcase name="Multiply" classname="com.brazil.luvtwocode.demoproject.DemoUtilsTest" time="0.015"/>
+  <testcase name="Throws and Does Not Throw" classname="com.brazil.luvtwocode.demoproject.DemoUtilsTest" time="0.016"/>
 </testsuite>
