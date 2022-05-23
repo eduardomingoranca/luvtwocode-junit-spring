@@ -42,7 +42,7 @@ class ApplicationTests {
 	ApplicationContext context;
 
 	@BeforeEach
-	public void beforeEach() {
+	void beforeEach() {
 		count = count + 1;
 		System.out.println("Testing: ".concat(appInfo).concat(" which is ")
 				.concat(appDescription).concat(" Version: ").concat(appVersion)
@@ -56,7 +56,7 @@ class ApplicationTests {
 
 	@DisplayName("Add grade results for student grades")
 	@Test
-	public void addGradeResultsForStudentGrades() {
+	void addGradeResultsForStudentGrades() {
 		assertEquals(353.25, studentGradesCore.addGradeResultsForSingleClass(
 				collegeStudent.getStudentGradesCore().getMathGradeResults()
 		));
@@ -64,7 +64,7 @@ class ApplicationTests {
 
 	@DisplayName("Add grade results for student grades not equal")
 	@Test
-	public void addGradeResultsForStudentGradesAssertNotEquals() {
+	void addGradeResultsForStudentGradesAssertNotEquals() {
 		assertNotEquals(0, studentGradesCore.addGradeResultsForSingleClass(
 				collegeStudent.getStudentGradesCore().getMathGradeResults()
 		));
@@ -72,28 +72,28 @@ class ApplicationTests {
 
 	@DisplayName("Is grade greater")
 	@Test
-	public void isGradeGreaterStudentGrades() {
+	void isGradeGreaterStudentGrades() {
 		assertTrue(studentGradesCore.isGradeGreater(90, 75)
 				, "failure - should be true");
 	}
 
 	@DisplayName("Is grade greater false")
 	@Test
-	public void isGradeGreaterStudentGradesAssertFalse() {
+	void isGradeGreaterStudentGradesAssertFalse() {
 		assertFalse(studentGradesCore.isGradeGreater(89, 92)
 				, "failure - should be false");
 	}
 
 	@DisplayName("Check Null for student grades")
 	@Test
-	public void checkNullForStudentGrades() {
+	void checkNullForStudentGrades() {
 		assertNotNull(studentGradesCore.checkNull(collegeStudent.getStudentGradesCore()
 				.getMathGradeResults()), "object should not be null");
 	}
 
 	@DisplayName("Create student without grade init")
 	@Test
-	public void createStudentWithoutGradesInit() {
+	void createStudentWithoutGradesInit() {
 		CollegeStudent studentTwo = context.getBean("collegeStudent", CollegeStudent.class);
 		studentTwo.setFirstname("Alan");
 		studentTwo.setLastname("Hammond");
@@ -106,14 +106,14 @@ class ApplicationTests {
 
 	@DisplayName("Verify students are prototypes")
 	@Test
-	public void verifyStudentsArePrototypes() {
+	void verifyStudentsArePrototypes() {
 		CollegeStudent studentTwo = context.getBean("collegeStudent", CollegeStudent.class);
 		assertNotSame(collegeStudent, studentTwo);
 	}
 
 	@DisplayName("Find Grade Point Average")
 	@Test
-	public void findGradePointAverage() {
+	void findGradePointAverage() {
 		assertAll("Testing all assertEquals",
 				()-> assertEquals(353.25, studentGradesCore.addGradeResultsForSingleClass(
 						collegeStudent.getStudentGradesCore().getMathGradeResults())),
