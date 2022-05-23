@@ -12,8 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.ArrayList;
 
 import static java.util.Arrays.asList;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class ApplicationTests {
@@ -65,6 +64,27 @@ class ApplicationTests {
 		assertNotEquals(0, studentGradesCore.addGradeResultsForSingleClass(
 				collegeStudent.getStudentGradesCore().getMathGradeResults()
 		));
+	}
+
+	@DisplayName("Is grade greater")
+	@Test
+	public void isGradeGreaterStudentGrades() {
+		assertTrue(studentGradesCore.isGradeGreater(90, 75)
+				, "failure - should be true");
+	}
+
+	@DisplayName("Is grade greater false")
+	@Test
+	public void isGradeGreaterStudentGradesAssertFalse() {
+		assertFalse(studentGradesCore.isGradeGreater(89, 92)
+				, "failure - should be false");
+	}
+
+	@DisplayName("Check Null for student grades")
+	@Test
+	public void checkNullForStudentGrades() {
+		assertNotNull(studentGradesCore.checkNull(collegeStudent.getStudentGradesCore()
+				.getMathGradeResults()), "object should not be null");
 	}
 
 }
