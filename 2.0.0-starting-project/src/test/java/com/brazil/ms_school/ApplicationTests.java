@@ -2,8 +2,8 @@ package com.brazil.ms_school;
 
 import com.brazil.ms_school.domain.core.StudentGradesCore;
 import com.brazil.ms_school.domain.models.CollegeStudent;
-import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,9 +12,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.ArrayList;
 
 import static java.util.Arrays.asList;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 @SpringBootTest
-@RequiredArgsConstructor
 class ApplicationTests {
 
 	private static int count = 0;
@@ -50,8 +51,20 @@ class ApplicationTests {
 		collegeStudent.setStudentGradesCore(studentGradesCore);
 	}
 
+	@DisplayName("Add grade results for student grades")
 	@Test
-	void contextLoads() {
+	public void addGradeResultsForStudentGrades() {
+		assertEquals(353.25, studentGradesCore.addGradeResultsForSingleClass(
+				collegeStudent.getStudentGradesCore().getMathGradeResults()
+		));
+	}
+
+	@DisplayName("Add grade results for student grades not equal")
+	@Test
+	public void addGradeResultsForStudentGradesAssertNotEquals() {
+		assertNotEquals(0, studentGradesCore.addGradeResultsForSingleClass(
+				collegeStudent.getStudentGradesCore().getMathGradeResults()
+		));
 	}
 
 }
