@@ -1,5 +1,6 @@
 package com.brazil.ms_school.domain.models;
 
+import com.brazil.ms_school.domain.core.StudentGradesCore;
 import com.brazil.ms_school.domain.ports.StudentPort;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,6 +16,7 @@ public class CollegeStudent implements StudentPort {
     private String firstname;
     private String lastname;
     private String emailAddress;
+    private StudentGradesCore studentGradesCore;
 
     public CollegeStudent(String firstname, String lastname, String emailAddress) {
         this.firstname = firstname;
