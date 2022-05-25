@@ -1,14 +1,14 @@
 package com.brazil.ms_school.app.core;
 
 import com.brazil.ms_school.app.adapter.ApplicationAdapter;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
-@RequiredArgsConstructor
 public class ApplicationCore {
 
-    private final ApplicationAdapter applicationAdapter;
+    @Autowired
+    private ApplicationAdapter applicationAdapter;
 
     public double addGradeResultsForSingleClass(List<Double> numbers) {
         return applicationAdapter.addGradeResultsForSingleClass(numbers);
