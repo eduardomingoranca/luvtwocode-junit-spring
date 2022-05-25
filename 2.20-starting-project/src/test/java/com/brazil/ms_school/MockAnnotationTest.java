@@ -7,14 +7,13 @@ import com.brazil.ms_school.app.model.CollegeStudent;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.ApplicationContext;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest(classes = MsSchoolApplication.class)
@@ -66,6 +65,16 @@ class MockAnnotationTest {
 
         assertEquals(88.31, applicationCore.findGradePointAverage(studentOne.getStudentGradesCore()
                 .getMathGradeResults()));
+    }
+
+    @DisplayName("Not Null")
+    @Test
+    void testAssertNotNull() {
+        when(applicationAdapter.checkNull(studentGradesCore.getMathGradeResults()))
+                .thenReturn(true);
+
+        assertNotNull(applicationCore.checkNull(studentOne.getStudentGradesCore()
+                .getMathGradeResults()), "Object should not be null");
     }
 
 }
