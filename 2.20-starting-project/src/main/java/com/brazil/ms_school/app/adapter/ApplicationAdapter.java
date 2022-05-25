@@ -8,6 +8,7 @@ import static java.math.RoundingMode.HALF_UP;
 
 public class ApplicationAdapter {
 
+    // adicionando cada uma das notas
     public double addGradeResultsForSingleClass(List<Double> grades) {
         double result = 0;
         for (double i : grades) {
@@ -16,6 +17,7 @@ public class ApplicationAdapter {
         return result;
     }
 
+    // media das notas
     public double findGradePointAverage(List<Double> grades) {
         int lengthOfGrades = grades.size();
         double sum = addGradeResultsForSingleClass(grades);
@@ -28,6 +30,7 @@ public class ApplicationAdapter {
 
     }
 
+    // verificando se o objeto e nulo
     public Object checkNull(Object obj) {
         if (obj != null) {
             return obj;

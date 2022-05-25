@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -15,6 +16,7 @@ import static java.math.RoundingMode.HALF_UP;
 @ToString
 @Getter
 @Setter
+@Component
 public class StudentGradesCore {
 
     List<Double> mathGradeResults;
