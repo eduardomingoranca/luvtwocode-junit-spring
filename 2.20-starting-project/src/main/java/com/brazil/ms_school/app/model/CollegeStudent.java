@@ -10,6 +10,7 @@ import lombok.ToString;
 @Getter
 @Setter
 public class CollegeStudent implements StudentPort {
+    private int id;
     private String firstname;
     private String lastname;
     private String emailAddress;
@@ -23,6 +24,10 @@ public class CollegeStudent implements StudentPort {
     @Override
     public String getFullName() {
         return getFirstname() + " " + getLastname();
+    }
+
+    private String getFirstNameAndId() {
+        return getFirstname() + " " + getId();
     }
 
 }
