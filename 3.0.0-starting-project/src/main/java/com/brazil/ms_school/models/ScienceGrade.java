@@ -1,0 +1,58 @@
+package com.brazil.ms_school.models;
+
+import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+
+import static javax.persistence.GenerationType.IDENTITY;
+
+@Entity
+@Table(name = "science_grade")
+@NoArgsConstructor
+public class ScienceGrade implements Grade {
+
+    @Id
+    @GeneratedValue(strategy= IDENTITY)
+    private int id;
+
+    @Column(name="student_id")
+    private int studentId;
+
+    @Column(name="grade")
+    private double grade;
+
+    public ScienceGrade(double grade) {
+        this.grade = grade;
+    }
+
+    @Override
+    public double getGrade() {
+        return this.grade;
+    }
+
+    @Override
+    public int getId() {
+        return this.id;
+    }
+
+    @Override
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    @Override
+    public int getStudentId() {
+        return this.studentId;
+    }
+
+    @Override
+    public void setStudentId(int studentId) {
+        this.studentId = studentId;
+    }
+
+    @Override
+    public void setGrade(double grade) {
+        this.grade = grade;
+    }
+
+}
