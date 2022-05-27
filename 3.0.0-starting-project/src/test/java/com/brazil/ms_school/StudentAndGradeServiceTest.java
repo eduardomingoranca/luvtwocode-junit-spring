@@ -11,6 +11,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.TestPropertySource;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 /*
@@ -57,6 +59,20 @@ class StudentAndGradeServiceTest {
     void isStudentNullCheck() {
         assertTrue(studentService.checkIfStudentIsNull(1));
         assertFalse(studentService.checkIfStudentIsNull(0));
+    }
+
+    @Test
+    void deleteStudentService() {
+        Optional<CollegeStudent> deletedCollegeStudent = studentDao.findById(1);
+
+        assertTrue(deletedCollegeStudent.isPresent(), "Return True");
+        
+        studentService.deleteStudent(1);
+
+        // recuperando o aluno excluido
+        deletedCollegeStudent = studentDao.findById(1);
+
+        assertFalse(deletedCollegeStudent.isPresent(), "Return False");
     }
 
     @AfterEach

@@ -33,4 +33,9 @@ public class StudentAndGradeService {
         return false;
     }
 
+    public void deleteStudent(int id) {
+        if (checkIfStudentIsNull(id)) {
+            studentDao.deleteById(id);
+        }
+    }
 }
