@@ -1,10 +1,14 @@
 package com.brazil.ms_school;
 
+import com.brazil.ms_school.models.CollegeStudent;
+import com.brazil.ms_school.repository.StudentDao;
 import com.brazil.ms_school.service.StudentAndGradeService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /*
  permite carregar propriedades durante o teste, neste caso
@@ -17,9 +21,19 @@ class StudentAndGradeServiceTest {
     @Autowired
     private StudentAndGradeService studentService;
 
+    @Autowired
+    private StudentDao studentDao;
+
     @Test
     void createStudentService() {
         studentService.createStudent("Chad", "Darby",
                 "chad.darby@luv2code_school.com");
+
+        CollegeStudent student = studentDao
+                .findByEmailAddress("chad.darby@luv2code_school.com");
+
+        assertEquals("chad.darby@luv2code_school.com", 
+                student.getEmailAddress(), "find by email");
     }
+
 }
