@@ -11,8 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +24,8 @@ import java.util.List;
 import static java.util.Arrays.asList;
 import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.ModelAndViewAssert.assertViewName;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 // buscando as propriedades no arquivo application.properties
 @TestPropertySource("/application.properties")
@@ -27,6 +33,8 @@ import static org.mockito.Mockito.when;
 @AutoConfigureMockMvc
 @SpringBootTest
 class GradebookControllerTest {
+
+    private static MockHttpServletRequest request;
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -56,6 +64,14 @@ class GradebookControllerTest {
         when(studentAndGradeServiceMock.getGradebook()).thenReturn(collegeStudentList);
 
         assertIterableEquals(collegeStudentList, studentAndGradeServiceMock.getGradebook());
+
+        // realizando uma solicitacao web
+        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/"))
+                .andExpect(status().isOk()).andReturn();
+
+        ModelAndView mav = mvcResult.getModelAndView();
+
+        assertViewName(mav, "index");
     }
 
     @AfterEach
