@@ -4,6 +4,7 @@ import com.brazil.ms_school.models.CollegeStudent;
 import com.brazil.ms_school.models.GradebookCollegeStudent;
 import com.brazil.ms_school.service.StudentAndGradeService;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -24,7 +25,9 @@ import java.util.List;
 import static java.util.Arrays.asList;
 import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 import static org.mockito.Mockito.when;
+import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.ModelAndViewAssert.assertViewName;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 // buscando as propriedades no arquivo application.properties
@@ -44,6 +47,18 @@ class GradebookControllerTest {
 
     @Mock
     private StudentAndGradeService studentAndGradeServiceMock;
+
+    @BeforeAll
+    static void setup() {
+        /*
+          fazendo uma solicitacao de simulada, podendo preencher
+          esta solicitacao com alguns dados.
+         */
+        request = new MockHttpServletRequest();
+        request.setParameter("firstname", "Chad");
+        request.setParameter("lastname", "Darby");
+        request.setParameter("emailAddress", "chad.darby@luv2code_school.com");
+    }
 
     @BeforeEach
     void beforeEach() {
@@ -67,6 +82,20 @@ class GradebookControllerTest {
 
         // realizando uma solicitacao web
         MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/"))
+                .andExpect(status().isOk()).andReturn();
+
+        ModelAndView mav = mvcResult.getModelAndView();
+
+        assertViewName(mav, "index");
+    }
+
+    @Test
+    void createStudentHttpRequest() throws Exception {
+        MvcResult mvcResult = this.mockMvc.perform(post("/")
+                        .contentType(APPLICATION_JSON)
+                        .param("firstname", request.getParameterValues("firstname"))
+                        .param("firstname", request.getParameterValues("firstname"))
+                        .param("firstname", request.getParameterValues("firstname")))
                 .andExpect(status().isOk()).andReturn();
 
         ModelAndView mav = mvcResult.getModelAndView();

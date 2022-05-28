@@ -6,9 +6,7 @@ import com.brazil.ms_school.service.StudentAndGradeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
@@ -25,6 +23,15 @@ public class GradebookController {
     public String getStudents(Model m) {
         Iterable<CollegeStudent> collegeStudents = studentService.getGradebook();
         m.addAttribute("students", collegeStudents);
+        return "index";
+    }
+
+    /*
+        quando os parametros vierem entao o spring faz o mepeamento
+        dos parametros para um determinado estudante universitario.
+     */
+    @PostMapping(value = "/")
+    public String createStudent(@ModelAttribute("student") CollegeStudent student, Model m) {
         return "index";
     }
 
