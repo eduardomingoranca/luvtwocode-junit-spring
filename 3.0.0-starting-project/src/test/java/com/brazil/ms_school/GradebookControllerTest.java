@@ -2,6 +2,7 @@ package com.brazil.ms_school;
 
 import com.brazil.ms_school.models.CollegeStudent;
 import com.brazil.ms_school.models.GradebookCollegeStudent;
+import com.brazil.ms_school.repository.StudentDao;
 import com.brazil.ms_school.service.StudentAndGradeService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -24,6 +25,7 @@ import java.util.List;
 
 import static java.util.Arrays.asList;
 import static org.junit.jupiter.api.Assertions.assertIterableEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.when;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.ModelAndViewAssert.assertViewName;
@@ -47,6 +49,9 @@ class GradebookControllerTest {
 
     @Mock
     private StudentAndGradeService studentAndGradeServiceMock;
+
+    @Autowired
+    private StudentDao studentDao;
 
     @BeforeAll
     static void setup() {
@@ -101,6 +106,13 @@ class GradebookControllerTest {
         ModelAndView mav = mvcResult.getModelAndView();
 
         assertViewName(mav, "index");
+
+        // buscando o aluno pelo endereco de email
+        CollegeStudent verifyStudent = studentDao
+                .findByEmailAddress("chad.darby@luv2code_school.com");
+
+        // verificando se o aluno existe
+        assertNotNull(verifyStudent, "Student should be found");
     }
 
     @AfterEach
