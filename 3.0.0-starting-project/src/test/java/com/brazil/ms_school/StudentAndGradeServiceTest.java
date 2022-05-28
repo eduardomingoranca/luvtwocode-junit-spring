@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.jdbc.Sql;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,6 +78,11 @@ class StudentAndGradeServiceTest {
         assertFalse(deletedCollegeStudent.isPresent(), "Return False");
     }
 
+    /*
+       carregando e executando o SQL para o teste, o arquivo sql sera executado e
+       carregado primeiro antes do teste.
+     */
+    @Sql("/insertData.sql")
     @Test
     void getGradebookService() {
         // obtendo uma lista ou colecao de todos os alunos do banco de dados.
@@ -88,7 +94,7 @@ class StudentAndGradeServiceTest {
             collegeStudents.add(collegeStudent);
         }
 
-        assertEquals(1, collegeStudents.size());
+        assertEquals(5, collegeStudents.size());
     }
 
     @AfterEach
