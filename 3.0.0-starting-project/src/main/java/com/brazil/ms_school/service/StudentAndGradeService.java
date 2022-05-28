@@ -38,4 +38,10 @@ public class StudentAndGradeService {
             studentDao.deleteById(id);
         }
     }
+
+    public Iterable<CollegeStudent> getGradebook() {
+        Iterable<CollegeStudent> collegeStudents = studentDao.findAll();
+        return collegeStudents;
+    }
+
 }
