@@ -94,8 +94,8 @@ class GradebookControllerTest {
         MvcResult mvcResult = this.mockMvc.perform(post("/")
                         .contentType(APPLICATION_JSON)
                         .param("firstname", request.getParameterValues("firstname"))
-                        .param("firstname", request.getParameterValues("firstname"))
-                        .param("firstname", request.getParameterValues("firstname")))
+                        .param("lastname", request.getParameterValues("lastname"))
+                        .param("emailAddress", request.getParameterValues("emailAddress")))
                 .andExpect(status().isOk()).andReturn();
 
         ModelAndView mav = mvcResult.getModelAndView();
