@@ -1,6 +1,8 @@
 package com.brazil.ms_school.controller;
 
+import com.brazil.ms_school.models.CollegeStudent;
 import com.brazil.ms_school.models.Gradebook;
+import com.brazil.ms_school.service.StudentAndGradeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,9 +18,13 @@ public class GradebookController {
     @Autowired
     private Gradebook gradebook;
 
+    @Autowired
+    private StudentAndGradeService studentService;
 
     @RequestMapping(value = "/", method = GET)
     public String getStudents(Model m) {
+        Iterable<CollegeStudent> collegeStudents = studentService.getGradebook();
+        m.addAttribute("students", collegeStudents);
         return "index";
     }
 
