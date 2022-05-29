@@ -1,5 +1,6 @@
-package com.brazil.ms_school.models;
+package com.brazil.ms_school.app.domain.model;
 
+import com.brazil.ms_school.app.port.out.GradePort;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -9,7 +10,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Entity
 @Table(name = "science_grade")
 @NoArgsConstructor
-public class ScienceGrade implements Grade {
+public class ScienceGrade implements GradePort {
 
     @Id
     @GeneratedValue(strategy= IDENTITY)

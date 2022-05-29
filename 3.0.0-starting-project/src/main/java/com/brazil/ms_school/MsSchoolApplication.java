@@ -1,6 +1,10 @@
 package com.brazil.ms_school;
 
-import com.brazil.ms_school.models.*;
+import com.brazil.ms_school.app.domain.model.CollegeStudent;
+import com.brazil.ms_school.app.domain.model.HistoryGrade;
+import com.brazil.ms_school.app.domain.model.MathGrade;
+import com.brazil.ms_school.app.domain.model.ScienceGrade;
+import com.brazil.ms_school.app.port.out.GradePort;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -22,7 +26,7 @@ public class MsSchoolApplication {
 
 	@Bean
 	@Scope(value = "prototype")
-	Grade getMathGrade(double grade) {
+	GradePort getMathGrade(double grade) {
 		return new MathGrade(grade);
 	}
 

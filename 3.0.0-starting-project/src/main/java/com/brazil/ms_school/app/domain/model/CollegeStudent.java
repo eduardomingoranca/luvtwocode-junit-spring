@@ -1,5 +1,6 @@
-package com.brazil.ms_school.models;
+package com.brazil.ms_school.app.domain.model;
 
+import com.brazil.ms_school.app.port.out.StudentPort;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,7 +14,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Getter
 @Setter
 @NoArgsConstructor
-public class CollegeStudent implements Student {
+public class CollegeStudent implements StudentPort {
 
     @Id
     @GeneratedValue(strategy= IDENTITY)

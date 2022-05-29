@@ -1,6 +1,6 @@
-package com.brazil.ms_school.models;
+package com.brazil.ms_school.app.port.out;
 
-public interface Grade {
+public interface GradePort {
     double getGrade();
 
     int getId();

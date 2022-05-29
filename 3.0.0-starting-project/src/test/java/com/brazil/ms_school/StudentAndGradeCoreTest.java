@@ -1,8 +1,8 @@
 package com.brazil.ms_school;
 
-import com.brazil.ms_school.models.CollegeStudent;
-import com.brazil.ms_school.repository.StudentDao;
-import com.brazil.ms_school.service.StudentAndGradeService;
+import com.brazil.ms_school.app.domain.model.CollegeStudent;
+import com.brazil.ms_school.app.port.out.StudentRepositoryPort;
+import com.brazil.ms_school.app.domain.core.StudentAndGradeCore;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 @TestPropertySource("/application.properties")
 @SpringBootTest
-class StudentAndGradeServiceTest {
+class StudentAndGradeCoreTest {
 
     /*
       JdbcTemplate e uma classe auxiliar fornecido pela
@@ -35,10 +35,10 @@ class StudentAndGradeServiceTest {
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
-    private StudentAndGradeService studentService;
+    private StudentAndGradeCore studentCore;
 
     @Autowired
-    private StudentDao studentDao;
+    private StudentRepositoryPort studentRepositoryPort;
 
     @BeforeEach
     void setupDatabase() {
@@ -48,10 +48,10 @@ class StudentAndGradeServiceTest {
 
     @Test
     void createStudentService() {
-        studentService.createStudent("Chad", "Darby",
+        studentCore.createStudent("Chad", "Darby",
                 "chad.darby@luv2code_school.com");
 
-        CollegeStudent student = studentDao
+        CollegeStudent student = studentRepositoryPort
                 .findByEmailAddress("chad.darby@luv2code_school.com");
 
         assertEquals("chad.darby@luv2code_school.com", 
@@ -60,20 +60,20 @@ class StudentAndGradeServiceTest {
 
     @Test
     void isStudentNullCheck() {
-        assertTrue(studentService.checkIfStudentIsNull(1));
-        assertFalse(studentService.checkIfStudentIsNull(0));
+        assertTrue(studentCore.checkIfStudentIsNull(1));
+        assertFalse(studentCore.checkIfStudentIsNull(0));
     }
 
     @Test
     void deleteStudentService() {
-        Optional<CollegeStudent> deletedCollegeStudent = studentDao.findById(1);
+        Optional<CollegeStudent> deletedCollegeStudent = studentRepositoryPort.findById(1);
 
         assertTrue(deletedCollegeStudent.isPresent(), "Return True");
         
-        studentService.deleteStudent(1);
+        studentCore.deleteStudent(1);
 
         // recuperando o aluno excluido
-        deletedCollegeStudent = studentDao.findById(1);
+        deletedCollegeStudent = studentRepositoryPort.findById(1);
 
         assertFalse(deletedCollegeStudent.isPresent(), "Return False");
     }
@@ -86,7 +86,7 @@ class StudentAndGradeServiceTest {
     @Test
     void getGradebookService() {
         // obtendo uma lista ou colecao de todos os alunos do banco de dados.
-        Iterable<CollegeStudent> iterableCollegeStudents = studentService.getGradebook();
+        Iterable<CollegeStudent> iterableCollegeStudents = studentCore.getGradebook();
 
         List<CollegeStudent> collegeStudents = new ArrayList<>();
 

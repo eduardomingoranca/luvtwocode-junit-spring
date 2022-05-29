@@ -1,5 +1,6 @@
-package com.brazil.ms_school.models;
+package com.brazil.ms_school.app.domain.core;
 
+import com.brazil.ms_school.app.port.out.GradePort;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,22 +17,22 @@ import static java.math.RoundingMode.HALF_UP;
 @Setter
 @NoArgsConstructor
 @ToString
-public class StudentGrades {
-    private List<Grade> mathGradeResults;
+public class StudentGradesCore {
+    private List<GradePort> mathGradeResults;
 
-    private List<Grade> scienceGradeResults;
+    private List<GradePort> scienceGradeResults;
 
-    private List<Grade> historyGradeResults;
+    private List<GradePort> historyGradeResults;
 
-    public double addGradeResultsForSingleClass(List<Grade> grades) {
+    public double addGradeResultsForSingleClass(List<GradePort> grades) {
         double result = 0;
-        for (Grade i : grades) {
+        for (GradePort i : grades) {
             result += i.getGrade();
         }
         return result;
     }
 
-    public double findGradePointAverage (List<Grade> grades ) {
+    public double findGradePointAverage (List<GradePort> grades ) {
         int lengthOfGrades = grades.size();
         double sum = addGradeResultsForSingleClass(grades);
         double result = sum / lengthOfGrades;

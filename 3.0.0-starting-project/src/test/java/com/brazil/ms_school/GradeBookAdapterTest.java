@@ -1,9 +1,9 @@
 package com.brazil.ms_school;
 
-import com.brazil.ms_school.models.CollegeStudent;
-import com.brazil.ms_school.models.GradebookCollegeStudent;
-import com.brazil.ms_school.repository.StudentDao;
-import com.brazil.ms_school.service.StudentAndGradeService;
+import com.brazil.ms_school.app.domain.model.CollegeStudent;
+import com.brazil.ms_school.app.domain.model.GradeBookCollegeStudent;
+import com.brazil.ms_school.app.port.out.StudentRepositoryPort;
+import com.brazil.ms_school.app.domain.core.StudentAndGradeCore;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -36,7 +36,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 // configurando o mockmvc
 @AutoConfigureMockMvc
 @SpringBootTest
-class GradebookControllerTest {
+class GradeBookAdapterTest {
 
     private static MockHttpServletRequest request;
 
@@ -47,10 +47,10 @@ class GradebookControllerTest {
     private MockMvc mockMvc;
 
     @Mock
-    private StudentAndGradeService studentCreateServiceMock;
+    private StudentAndGradeCore studentCreateCoreMock;
 
     @Autowired
-    private StudentDao studentDao;
+    private StudentRepositoryPort studentRepositoryPort;
 
     @BeforeAll
     static void setup() {
@@ -72,17 +72,17 @@ class GradebookControllerTest {
 
     @Test
     void getStudentsHttpRequest() throws Exception {
-        CollegeStudent studentOne = new GradebookCollegeStudent("Eric", "Roby",
+        CollegeStudent studentOne = new GradeBookCollegeStudent("Eric", "Roby",
                 "eric_roby@luv2code_school.com");
 
-        CollegeStudent studentTwo = new GradebookCollegeStudent("Chad", "Darby",
+        CollegeStudent studentTwo = new GradeBookCollegeStudent("Chad", "Darby",
                 "chad_darby@luv2code_school.com");
 
         List<CollegeStudent> collegeStudentList = new ArrayList<>(asList(studentOne, studentTwo));
 
-        when(studentCreateServiceMock.getGradebook()).thenReturn(collegeStudentList);
+        when(studentCreateCoreMock.getGradebook()).thenReturn(collegeStudentList);
 
-        assertIterableEquals(collegeStudentList, studentCreateServiceMock.getGradebook());
+        assertIterableEquals(collegeStudentList, studentCreateCoreMock.getGradebook());
 
         // realizando uma solicitacao web
         MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/"))
@@ -101,9 +101,9 @@ class GradebookControllerTest {
 
         List<CollegeStudent> collegeStudentList = new ArrayList<>(asList(studentOne));
 
-        when(studentCreateServiceMock.getGradebook()).thenReturn(collegeStudentList);
+        when(studentCreateCoreMock.getGradebook()).thenReturn(collegeStudentList);
 
-        assertIterableEquals(collegeStudentList, studentCreateServiceMock.getGradebook());
+        assertIterableEquals(collegeStudentList, studentCreateCoreMock.getGradebook());
 
         MvcResult mvcResult = this.mockMvc.perform(post("/")
                         .contentType(APPLICATION_JSON)
@@ -117,7 +117,7 @@ class GradebookControllerTest {
         assertViewName(mav, "index");
 
         // buscando o aluno pelo endereco de email
-        CollegeStudent verifyStudent = studentDao
+        CollegeStudent verifyStudent = studentRepositoryPort
                 .findByEmailAddress("chad.darby@luv2code_school.com");
 
         // verificando se o aluno existe
@@ -127,7 +127,7 @@ class GradebookControllerTest {
     @Test
     void deleteStudentHttpRequest() throws Exception {
         // verificando se o aluno
-        assertTrue(studentDao.findById(1).isPresent());
+        assertTrue(studentRepositoryPort.findById(1).isPresent());
 
         MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders
                 .get("/delete/student/{id}", 1))
@@ -137,7 +137,7 @@ class GradebookControllerTest {
 
         assertViewName(mav, "index");
 
-        assertFalse(studentDao.findById(1).isPresent());
+        assertFalse(studentRepositoryPort.findById(1).isPresent());
     }
 
     @Test

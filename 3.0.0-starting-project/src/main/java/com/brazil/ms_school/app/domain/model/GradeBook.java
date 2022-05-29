@@ -1,4 +1,4 @@
-package com.brazil.ms_school.models;
+package com.brazil.ms_school.app.domain.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,6 +14,6 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-public class Gradebook {
-    private List<GradebookCollegeStudent> students = new ArrayList<>();
+public class GradeBook {
+    private List<GradeBookCollegeStudent> students = new ArrayList<>();
 }
