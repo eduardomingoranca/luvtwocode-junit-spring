@@ -15,15 +15,15 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 public class GradeBookAdapter implements GradeBookPort {
 
     @Autowired
-    private GradeBook gradebook;
+    private GradeBook gradeBook;
 
     @Autowired
-    private StudentAndGradeCore studentService;
+    private StudentAndGradeCore studentCore;
 
     @Override
     @RequestMapping(value = "/", method = GET)
     public String getStudents(Model m) {
-        Iterable<CollegeStudent> collegeStudents = studentService.getGradebook();
+        Iterable<CollegeStudent> collegeStudents = studentCore.getGradebook();
         m.addAttribute("students", collegeStudents);
         return "index";
     }
@@ -35,13 +35,13 @@ public class GradeBookAdapter implements GradeBookPort {
     @Override
     @PostMapping(value = "/")
     public String createStudent(@ModelAttribute("student") CollegeStudent student, Model m) {
-        studentService.createStudent(student.getFirstname(), student.getLastname(),
+        studentCore.createStudent(student.getFirstname(), student.getLastname(),
                 student.getEmailAddress());
         /*
           depois de criar este aluno, obteremos uma lista dos alunos e
           adiciona-los como um atributo de modelo.
          */
-        Iterable<CollegeStudent> collegeStudents = studentService.getGradebook();
+        Iterable<CollegeStudent> collegeStudents = studentCore.getGradebook();
         m.addAttribute("students", collegeStudents);
 
         return "index";
@@ -51,12 +51,12 @@ public class GradeBookAdapter implements GradeBookPort {
     @GetMapping("/delete/student/{id}")
     public String deleteStudent(@PathVariable int id, Model m) {
 
-        if (!studentService.checkIfStudentIsNull(id)) {
+        if (!studentCore.checkIfStudentIsNull(id)) {
             return "error";
         }
 
-        studentService.deleteStudent(id);
-        Iterable<CollegeStudent> collegeStudents = studentService.getGradebook();
+        studentCore.deleteStudent(id);
+        Iterable<CollegeStudent> collegeStudents = studentCore.getGradebook();
         m.addAttribute("students", collegeStudents);
 
         return "index";
