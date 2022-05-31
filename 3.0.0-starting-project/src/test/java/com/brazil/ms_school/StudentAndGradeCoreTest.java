@@ -2,8 +2,10 @@ package com.brazil.ms_school;
 
 import com.brazil.ms_school.app.domain.core.StudentAndGradeCore;
 import com.brazil.ms_school.app.domain.model.CollegeStudent;
+import com.brazil.ms_school.app.domain.model.HistoryGrade;
 import com.brazil.ms_school.app.domain.model.MathGrade;
 import com.brazil.ms_school.app.domain.model.ScienceGrade;
+import com.brazil.ms_school.app.port.out.HistoryGradesPort;
 import com.brazil.ms_school.app.port.out.MathGradesPort;
 import com.brazil.ms_school.app.port.out.ScienceGradesPort;
 import com.brazil.ms_school.app.port.out.StudentRepositoryPort;
@@ -50,21 +52,24 @@ class StudentAndGradeCoreTest {
     @Autowired
     private ScienceGradesPort scienceGradesPort;
 
+    @Autowired
+    private HistoryGradesPort historyGradesPort;
+
     @BeforeEach
     void setupDatabase() {
         jdbcTemplate.execute("insert into student(id, email_address, firstname, lastname)" +
-                "values (1, 'eric.roby@luv2code_school.com', 'Eric', 'Roby')");
+                "values (1, 'lon.hammond@luv2code_school.com', 'Lon', 'Hammond')");
     }
 
     @Test
     void createStudentService() {
-        studentCore.createStudent("Chad", "Darby",
-                "chad.darby@luv2code_school.com");
+        studentCore.createStudent("Noah", "Calhoun",
+                "noah.calhoun@luv2code_school.com");
 
         CollegeStudent student = studentRepositoryPort
-                .findByEmailAddress("chad.darby@luv2code_school.com");
+                .findByEmailAddress("noah.calhoun@luv2code_school.com");
 
-        assertEquals("chad.darby@luv2code_school.com", 
+        assertEquals("noah.calhoun@luv2code_school.com",
                 student.getEmailAddress(), "find by email");
     }
 
@@ -112,14 +117,17 @@ class StudentAndGradeCoreTest {
         // create the grade
         assertTrue(studentCore.createGrade(80.5, 1, "math"));
         assertTrue(studentCore.createGrade(80.5, 1, "science"));
+        assertTrue(studentCore.createGrade(80.5, 1, "history"));
 
         // get all grades with studentId
         Iterable<MathGrade> mathGrades = mathGradesPort.findGradeByStudentId(1);
         Iterable<ScienceGrade> scienceGrades = scienceGradesPort.findGradeByStudentId(1);
+        Iterable<HistoryGrade> historyGrades = historyGradesPort.findGradeByStudentId(1);
 
         // verify there is grade
         assertTrue(mathGrades.iterator().hasNext(), "Student has math grades");
         assertTrue(scienceGrades.iterator().hasNext(), "Student has science grades");
+        assertTrue(historyGrades.iterator().hasNext(), "Student has history grades");
     }
 
     @AfterEach

@@ -59,24 +59,24 @@ class GradeBookAdapterTest {
           esta solicitacao com alguns dados.
          */
         request = new MockHttpServletRequest();
-        request.setParameter("firstname", "Chad");
-        request.setParameter("lastname", "Darby");
-        request.setParameter("emailAddress", "chad.darby@luv2code_school.com");
+        request.setParameter("firstname", "Noah");
+        request.setParameter("lastname", "Calhoun");
+        request.setParameter("emailAddress", "noah.calhoun@luv2code_school.com");
     }
 
     @BeforeEach
     void beforeEach() {
         jdbcTemplate.execute("insert into student(id, email_address, firstname, lastname)" +
-                "values (1, 'eric.roby@luv2code_school.com', 'Eric', 'Roby')");
+                "values (1, 'lon.hammond@luv2code_school.com', 'Lon', 'Hammond')");
     }
 
     @Test
     void getStudentsHttpRequest() throws Exception {
-        CollegeStudent studentOne = new GradeBookCollegeStudent("Eric", "Roby",
-                "eric_roby@luv2code_school.com");
+        CollegeStudent studentOne = new GradeBookCollegeStudent("Lon", "Hammond",
+                "lon_hammond@luv2code_school.com");
 
-        CollegeStudent studentTwo = new GradeBookCollegeStudent("Chad", "Darby",
-                "chad_darby@luv2code_school.com");
+        CollegeStudent studentTwo = new GradeBookCollegeStudent("Noah", "Calhoun",
+                "noah_calhoun@luv2code_school.com");
 
         List<CollegeStudent> collegeStudentList = new ArrayList<>(asList(studentOne, studentTwo));
 
@@ -96,8 +96,8 @@ class GradeBookAdapterTest {
     @Test
     void createStudentHttpRequest() throws Exception {
 
-        CollegeStudent studentOne = new CollegeStudent("Eric", "Roby",
-                "eric_roby@luv2code_school.com");
+        CollegeStudent studentOne = new CollegeStudent("Lon", "Hammond",
+                "lon_hammond@luv2code_school.com");
 
         List<CollegeStudent> collegeStudentList = new ArrayList<>(asList(studentOne));
 
@@ -118,7 +118,7 @@ class GradeBookAdapterTest {
 
         // buscando o aluno pelo endereco de email
         CollegeStudent verifyStudent = studentRepositoryPort
-                .findByEmailAddress("chad.darby@luv2code_school.com");
+                .findByEmailAddress("noah.calhoun@luv2code_school.com");
 
         // verificando se o aluno existe
         assertNotNull(verifyStudent, "Student should be found");

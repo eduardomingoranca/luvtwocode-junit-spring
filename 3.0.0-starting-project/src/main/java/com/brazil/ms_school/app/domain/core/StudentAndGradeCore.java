@@ -1,8 +1,10 @@
 package com.brazil.ms_school.app.domain.core;
 
 import com.brazil.ms_school.app.domain.model.CollegeStudent;
+import com.brazil.ms_school.app.domain.model.HistoryGrade;
 import com.brazil.ms_school.app.domain.model.MathGrade;
 import com.brazil.ms_school.app.domain.model.ScienceGrade;
+import com.brazil.ms_school.app.port.out.HistoryGradesPort;
 import com.brazil.ms_school.app.port.out.MathGradesPort;
 import com.brazil.ms_school.app.port.out.ScienceGradesPort;
 import com.brazil.ms_school.app.port.out.StudentRepositoryPort;
@@ -37,6 +39,11 @@ public class StudentAndGradeCore {
     private final ScienceGrade scienceGrade;
 
     private final ScienceGradesPort scienceGradesPort;
+
+    @Qualifier("historyGrades")
+    private final HistoryGrade historyGrade;
+
+    private final HistoryGradesPort historyGradesPort;
 
     public void createStudent(String firstname, String lastname, String emailAddress) {
         CollegeStudent student = new CollegeStudent(firstname, lastname, emailAddress);
@@ -83,6 +90,14 @@ public class StudentAndGradeCore {
                 scienceGrade.setGrade(grade);
                 scienceGrade.setStudentId(studentId);
                 scienceGradesPort.save(scienceGrade);
+
+                return true;
+            }
+            if (gradeType.equals("history")) {
+                historyGrade.setId(0);
+                historyGrade.setGrade(grade);
+                historyGrade.setStudentId(studentId);
+                historyGradesPort.save(historyGrade);
 
                 return true;
             }
