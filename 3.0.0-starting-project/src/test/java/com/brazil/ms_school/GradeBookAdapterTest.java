@@ -80,9 +80,9 @@ class GradeBookAdapterTest {
 
         List<CollegeStudent> collegeStudentList = new ArrayList<>(asList(studentOne, studentTwo));
 
-        when(studentCreateCoreMock.getGradebook()).thenReturn(collegeStudentList);
+        when(studentCreateCoreMock.getGradeBook()).thenReturn(collegeStudentList);
 
-        assertIterableEquals(collegeStudentList, studentCreateCoreMock.getGradebook());
+        assertIterableEquals(collegeStudentList, studentCreateCoreMock.getGradeBook());
 
         // realizando uma solicitacao web
         MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/"))
@@ -101,9 +101,9 @@ class GradeBookAdapterTest {
 
         List<CollegeStudent> collegeStudentList = new ArrayList<>(asList(studentOne));
 
-        when(studentCreateCoreMock.getGradebook()).thenReturn(collegeStudentList);
+        when(studentCreateCoreMock.getGradeBook()).thenReturn(collegeStudentList);
 
-        assertIterableEquals(collegeStudentList, studentCreateCoreMock.getGradebook());
+        assertIterableEquals(collegeStudentList, studentCreateCoreMock.getGradeBook());
 
         MvcResult mvcResult = this.mockMvc.perform(post("/")
                         .contentType(APPLICATION_JSON)

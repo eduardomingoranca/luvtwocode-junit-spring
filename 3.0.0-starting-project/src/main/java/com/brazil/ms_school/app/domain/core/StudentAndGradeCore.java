@@ -1,8 +1,11 @@
 package com.brazil.ms_school.app.domain.core;
 
 import com.brazil.ms_school.app.domain.model.CollegeStudent;
+import com.brazil.ms_school.app.domain.model.MathGrade;
+import com.brazil.ms_school.app.port.out.MathGradesPort;
 import com.brazil.ms_school.app.port.out.StudentRepositoryPort;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,10 +17,15 @@ import java.util.Optional;
  transacoes em segundo plano.
  */
 @Transactional
+@RequiredArgsConstructor
 public class StudentAndGradeCore {
 
-    @Autowired
-    private StudentRepositoryPort studentRepositoryPort;
+    private final StudentRepositoryPort studentRepositoryPort;
+
+    @Qualifier("mathGrades")
+    private final MathGrade mathGrade;
+
+    private final MathGradesPort mathGradesPort;
 
     public void createStudent(String firstname, String lastname, String emailAddress) {
         CollegeStudent student = new CollegeStudent(firstname, lastname, emailAddress);
@@ -39,9 +47,29 @@ public class StudentAndGradeCore {
         }
     }
 
-    public Iterable<CollegeStudent> getGradebook() {
+    public Iterable<CollegeStudent> getGradeBook() {
         Iterable<CollegeStudent> collegeStudents = studentRepositoryPort.findAll();
         return collegeStudents;
+    }
+
+    public boolean createGrade(double grade, int studentId, String gradeType) {
+        // verificando se o aluno existe
+        if (!checkIfStudentIsNull(studentId)) {
+            return false;
+        }
+
+        if (grade >= 0 && grade <= 100) {
+            if (gradeType.equals("math")) {
+                mathGrade.setId(0);
+                mathGrade.setGrade(grade);
+                mathGrade.setStudentId(studentId);
+                mathGradesPort.save(mathGrade);
+
+                return true;
+            }
+        }
+
+        return false;
     }
 
 }

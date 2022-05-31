@@ -1,8 +1,10 @@
 package com.brazil.ms_school;
 
-import com.brazil.ms_school.app.domain.model.CollegeStudent;
-import com.brazil.ms_school.app.port.out.StudentRepositoryPort;
 import com.brazil.ms_school.app.domain.core.StudentAndGradeCore;
+import com.brazil.ms_school.app.domain.model.CollegeStudent;
+import com.brazil.ms_school.app.domain.model.MathGrade;
+import com.brazil.ms_school.app.port.out.MathGradesPort;
+import com.brazil.ms_school.app.port.out.StudentRepositoryPort;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -39,6 +41,9 @@ class StudentAndGradeCoreTest {
 
     @Autowired
     private StudentRepositoryPort studentRepositoryPort;
+
+    @Autowired
+    private MathGradesPort mathGradesPort;
 
     @BeforeEach
     void setupDatabase() {
@@ -84,9 +89,9 @@ class StudentAndGradeCoreTest {
      */
     @Sql("/insertData.sql")
     @Test
-    void getGradebookService() {
+    void getGradeBookService() {
         // obtendo uma lista ou colecao de todos os alunos do banco de dados.
-        Iterable<CollegeStudent> iterableCollegeStudents = studentCore.getGradebook();
+        Iterable<CollegeStudent> iterableCollegeStudents = studentCore.getGradeBook();
 
         List<CollegeStudent> collegeStudents = new ArrayList<>();
 
@@ -95,6 +100,18 @@ class StudentAndGradeCoreTest {
         }
 
         assertEquals(5, collegeStudents.size());
+    }
+
+    @Test
+    void createGradeService() {
+        // create the grade
+        assertTrue(studentCore.createGrade(80.5, 1, "math"));
+
+        // get all grades with studentId
+        Iterable<MathGrade> mathGrades = mathGradesPort.findGradeByStudentId(1);
+
+        // verify there is grade
+        assertTrue(mathGrades.iterator().hasNext(), "Student has math grades");
     }
 
     @AfterEach

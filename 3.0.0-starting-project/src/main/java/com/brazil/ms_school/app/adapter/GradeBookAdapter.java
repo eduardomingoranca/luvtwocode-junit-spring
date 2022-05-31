@@ -1,10 +1,10 @@
 package com.brazil.ms_school.app.adapter;
 
+import com.brazil.ms_school.app.domain.core.StudentAndGradeCore;
 import com.brazil.ms_school.app.domain.model.CollegeStudent;
 import com.brazil.ms_school.app.domain.model.GradeBook;
-import com.brazil.ms_school.app.domain.core.StudentAndGradeCore;
 import com.brazil.ms_school.app.port.in.GradeBookPort;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -12,18 +12,16 @@ import org.springframework.web.bind.annotation.*;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 @Controller
+@RequiredArgsConstructor
 public class GradeBookAdapter implements GradeBookPort {
 
-    @Autowired
-    private GradeBook gradeBook;
-
-    @Autowired
-    private StudentAndGradeCore studentCore;
+    private final GradeBook gradeBook;
+    private final StudentAndGradeCore studentCore;
 
     @Override
     @RequestMapping(value = "/", method = GET)
     public String getStudents(Model m) {
-        Iterable<CollegeStudent> collegeStudents = studentCore.getGradebook();
+        Iterable<CollegeStudent> collegeStudents = studentCore.getGradeBook();
         m.addAttribute("students", collegeStudents);
         return "index";
     }
@@ -41,7 +39,7 @@ public class GradeBookAdapter implements GradeBookPort {
           depois de criar este aluno, obteremos uma lista dos alunos e
           adiciona-los como um atributo de modelo.
          */
-        Iterable<CollegeStudent> collegeStudents = studentCore.getGradebook();
+        Iterable<CollegeStudent> collegeStudents = studentCore.getGradeBook();
         m.addAttribute("students", collegeStudents);
 
         return "index";
@@ -56,7 +54,7 @@ public class GradeBookAdapter implements GradeBookPort {
         }
 
         studentCore.deleteStudent(id);
-        Iterable<CollegeStudent> collegeStudents = studentCore.getGradebook();
+        Iterable<CollegeStudent> collegeStudents = studentCore.getGradeBook();
         m.addAttribute("students", collegeStudents);
 
         return "index";
