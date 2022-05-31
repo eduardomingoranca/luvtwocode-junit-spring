@@ -3,7 +3,9 @@ package com.brazil.ms_school;
 import com.brazil.ms_school.app.domain.core.StudentAndGradeCore;
 import com.brazil.ms_school.app.domain.model.CollegeStudent;
 import com.brazil.ms_school.app.domain.model.MathGrade;
+import com.brazil.ms_school.app.domain.model.ScienceGrade;
 import com.brazil.ms_school.app.port.out.MathGradesPort;
+import com.brazil.ms_school.app.port.out.ScienceGradesPort;
 import com.brazil.ms_school.app.port.out.StudentRepositoryPort;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -44,6 +46,9 @@ class StudentAndGradeCoreTest {
 
     @Autowired
     private MathGradesPort mathGradesPort;
+
+    @Autowired
+    private ScienceGradesPort scienceGradesPort;
 
     @BeforeEach
     void setupDatabase() {
@@ -106,12 +111,15 @@ class StudentAndGradeCoreTest {
     void createGradeService() {
         // create the grade
         assertTrue(studentCore.createGrade(80.5, 1, "math"));
+        assertTrue(studentCore.createGrade(80.5, 1, "science"));
 
         // get all grades with studentId
         Iterable<MathGrade> mathGrades = mathGradesPort.findGradeByStudentId(1);
+        Iterable<ScienceGrade> scienceGrades = scienceGradesPort.findGradeByStudentId(1);
 
         // verify there is grade
         assertTrue(mathGrades.iterator().hasNext(), "Student has math grades");
+        assertTrue(scienceGrades.iterator().hasNext(), "Student has science grades");
     }
 
     @AfterEach
