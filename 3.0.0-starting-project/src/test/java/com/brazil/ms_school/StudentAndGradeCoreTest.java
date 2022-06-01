@@ -59,6 +59,12 @@ class StudentAndGradeCoreTest {
     void setupDatabase() {
         jdbcTemplate.execute("insert into student(id, email_address, firstname, lastname)" +
                 "values (1, 'lon.hammond@luv2code_school.com', 'Lon', 'Hammond')");
+
+        jdbcTemplate.execute("insert into math_grade(grade, student_id) values (100.0, 1)");
+
+        jdbcTemplate.execute("insert into science_grade(grade, student_id) values (100.0, 1)");
+
+        jdbcTemplate.execute("insert into history_grade(grade, student_id) values (100.0, 1)");
     }
 
     @Test
@@ -115,9 +121,9 @@ class StudentAndGradeCoreTest {
     @Test
     void createGradeService() {
         // create the grade
-        assertTrue(studentCore.createGrade(80.5, 1, "math"));
-        assertTrue(studentCore.createGrade(80.5, 1, "science"));
-        assertTrue(studentCore.createGrade(80.5, 1, "history"));
+        assertTrue(studentCore.createGrade(80.50, 1, "math"));
+        assertTrue(studentCore.createGrade(80.50, 1, "science"));
+        assertTrue(studentCore.createGrade(80.50, 1, "history"));
 
         // get all grades with studentId
         Iterable<MathGrade> mathGrades = mathGradesPort.findGradeByStudentId(1);
@@ -141,6 +147,9 @@ class StudentAndGradeCoreTest {
     @AfterEach
     void setupAfterTransaction() {
         jdbcTemplate.execute("DELETE FROM student");
+        jdbcTemplate.execute("DELETE FROM math_grade");
+        jdbcTemplate.execute("DELETE FROM science_grade");
+        jdbcTemplate.execute("DELETE FROM history_grade");
     }
 
 }
