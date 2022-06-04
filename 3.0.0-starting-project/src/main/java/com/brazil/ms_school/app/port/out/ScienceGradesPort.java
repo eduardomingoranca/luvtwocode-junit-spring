@@ -5,4 +5,6 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface ScienceGradesPort extends CrudRepository<ScienceGrade, Integer> {
     Iterable<ScienceGrade> findGradeByStudentId(int id);
+
+    void deleteByStudentId(int id);
 }

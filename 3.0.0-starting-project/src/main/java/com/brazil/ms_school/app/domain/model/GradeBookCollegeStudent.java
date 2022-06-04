@@ -3,6 +3,7 @@ package com.brazil.ms_school.app.domain.model;
 import com.brazil.ms_school.app.domain.core.StudentGradesCore;
 
 public class GradeBookCollegeStudent extends CollegeStudent {
+
     private int id;
 
     private StudentGradesCore studentGradesCore;

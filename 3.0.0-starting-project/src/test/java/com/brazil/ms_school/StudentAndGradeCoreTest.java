@@ -89,15 +89,27 @@ class StudentAndGradeCoreTest {
     @Test
     void deleteStudentService() {
         Optional<CollegeStudent> deletedCollegeStudent = studentRepositoryPort.findById(1);
+        Optional<MathGrade> deletedMathGrade = mathGradesPort.findById(1);
+        Optional<HistoryGrade> deletedHistoryGrade = historyGradesPort.findById(1);
+        Optional<ScienceGrade> deletedScienceGrade = scienceGradesPort.findById(1);
 
         assertTrue(deletedCollegeStudent.isPresent(), "Return True");
-        
+        assertTrue(deletedMathGrade.isPresent());
+        assertTrue(deletedHistoryGrade.isPresent());
+        assertTrue(deletedScienceGrade.isPresent());
+
         studentCore.deleteStudent(1);
 
         // recuperando o aluno excluido
         deletedCollegeStudent = studentRepositoryPort.findById(1);
+        deletedMathGrade = mathGradesPort.findById(1);
+        deletedHistoryGrade = historyGradesPort.findById(1);
+        deletedScienceGrade = scienceGradesPort.findById(1);
 
         assertFalse(deletedCollegeStudent.isPresent(), "Return False");
+        assertFalse(deletedMathGrade.isPresent());
+        assertFalse(deletedHistoryGrade.isPresent());
+        assertFalse(deletedScienceGrade.isPresent());
     }
 
     /*

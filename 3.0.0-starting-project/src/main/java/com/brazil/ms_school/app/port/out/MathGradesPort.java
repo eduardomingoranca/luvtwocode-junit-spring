@@ -5,4 +5,6 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface MathGradesPort extends CrudRepository<MathGrade, Integer> {
     Iterable<MathGrade> findGradeByStudentId(int id);
+
+    void deleteByStudentId(int id);
 }

@@ -62,6 +62,9 @@ public class StudentAndGradeCore {
     public void deleteStudent(int id) {
         if (checkIfStudentIsNull(id)) {
             studentRepositoryPort.deleteById(id);
+            mathGradesPort.deleteByStudentId(id);
+            scienceGradesPort.deleteByStudentId(id);
+            historyGradesPort.deleteByStudentId(id);
         }
     }
 
