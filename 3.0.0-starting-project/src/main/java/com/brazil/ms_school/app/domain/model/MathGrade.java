@@ -4,7 +4,7 @@ import com.brazil.ms_school.app.port.out.GradePort;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
-import javax.persisstudentIdtence.Entity;
+import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -17,7 +17,7 @@ public class MathGrade implements GradePort {
     private int id;
 
     @Column(name="student_id")
-    private int ;
+    private int studentId;
 
     @Column(name="grade")
     private double grade;

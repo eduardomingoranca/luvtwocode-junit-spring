@@ -107,17 +107,33 @@ public class StudentAndGradeCore {
     }
 
     public int deleteGrade(int id, String gradeType) {
-         int studentId = 0;
+        int studentId = 0;
 
-         if (gradeType.equals("math")) {
-             Optional<MathGrade> grade = mathGradesPort.findById(id);
-             if (!grade.isPresent()) {
-                 return studentId;
-             }
-             studentId = grade.get().getStudentId();
-             mathGradesPort.deleteById(id);
-         }
+        if (gradeType.equals("math")) {
+            Optional<MathGrade> grade = mathGradesPort.findById(id);
+            if (!grade.isPresent()) {
+                return studentId;
+            }
+            studentId = grade.get().getStudentId();
+            mathGradesPort.deleteById(id);
+        }
+        if (gradeType.equals("science")) {
+            Optional<ScienceGrade> grade = scienceGradesPort.findById(id);
+            if (!grade.isPresent()) {
+                return studentId;
+            }
+            studentId = grade.get().getStudentId();
+            scienceGradesPort.deleteById(id);
+        }
+        if (gradeType.equals("history")) {
+            Optional<HistoryGrade> grade = historyGradesPort.findById(id);
+            if (!grade.isPresent()) {
+                return studentId;
+            }
+            studentId = grade.get().getStudentId();
+            historyGradesPort.deleteById(id);
+        }
 
-         return studentId;
+        return studentId;
     }
 }
