@@ -1,18 +1,14 @@
 package com.brazil.ms_school.app.domain.core;
 
-import com.brazil.ms_school.app.domain.model.CollegeStudent;
-import com.brazil.ms_school.app.domain.model.HistoryGrade;
-import com.brazil.ms_school.app.domain.model.MathGrade;
-import com.brazil.ms_school.app.domain.model.ScienceGrade;
-import com.brazil.ms_school.app.port.out.HistoryGradesPort;
-import com.brazil.ms_school.app.port.out.MathGradesPort;
-import com.brazil.ms_school.app.port.out.ScienceGradesPort;
-import com.brazil.ms_school.app.port.out.StudentRepositoryPort;
+import com.brazil.ms_school.app.domain.model.*;
+import com.brazil.ms_school.app.port.out.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -44,6 +40,8 @@ public class StudentAndGradeCore {
     private final HistoryGrade historyGrade;
 
     private final HistoryGradesPort historyGradesPort;
+
+    private final StudentGradesCore studentGradesCore;
 
     public void createStudent(String firstname, String lastname, String emailAddress) {
         CollegeStudent student = new CollegeStudent(firstname, lastname, emailAddress);
@@ -139,4 +137,38 @@ public class StudentAndGradeCore {
 
         return studentId;
     }
+
+    public GradeBookCollegeStudent studentInformation(int id) {
+        // recuperando o aluno do banco de dados
+        Optional<CollegeStudent> student = studentRepositoryPort.findById(id);
+
+        // referenciando as notas de matematica
+        Iterable<MathGrade> mathGrades = mathGradesPort.findGradeByStudentId(id);
+        // referenciando as notas de ciencia
+        Iterable<ScienceGrade> scienceGrades = scienceGradesPort.findGradeByStudentId(id);
+        // referenciando as notas de historia
+        Iterable<HistoryGrade> historyGrades = historyGradesPort.findGradeByStudentId(id);
+
+        // convertendo uma iterable em uma list
+        List<GradePort> mathGradesList = new ArrayList<>();
+        mathGrades.forEach(mathGradesList::add);
+
+        List<GradePort> scienceGradesList = new ArrayList<>();
+        scienceGrades.forEach(scienceGradesList::add);
+
+        List<GradePort> historyGradesList = new ArrayList<>();
+        historyGrades.forEach(historyGradesList::add);
+
+        // enviando as notas
+        studentGradesCore.setMathGradeResults(mathGradesList);
+        studentGradesCore.setScienceGradeResults(scienceGradesList);
+        studentGradesCore.setHistoryGradeResults(historyGradesList);
+
+        GradeBookCollegeStudent gradeBookCollegeStudent = new GradeBookCollegeStudent(student.get().getId(),
+                student.get().getFirstname(), student.get().getLastname(), student.get().getEmailAddress(),
+                studentGradesCore);
+
+        return gradeBookCollegeStudent;
+    }
+
 }

@@ -1,10 +1,7 @@
 package com.brazil.ms_school;
 
 import com.brazil.ms_school.app.domain.core.StudentAndGradeCore;
-import com.brazil.ms_school.app.domain.model.CollegeStudent;
-import com.brazil.ms_school.app.domain.model.HistoryGrade;
-import com.brazil.ms_school.app.domain.model.MathGrade;
-import com.brazil.ms_school.app.domain.model.ScienceGrade;
+import com.brazil.ms_school.app.domain.model.*;
 import com.brazil.ms_school.app.port.out.HistoryGradesPort;
 import com.brazil.ms_school.app.port.out.MathGradesPort;
 import com.brazil.ms_school.app.port.out.ScienceGradesPort;
@@ -173,6 +170,21 @@ class StudentAndGradeCoreTest {
                 "No student should have 0 id");
         assertEquals(0, studentCore.deleteGrade(1, "literature"),
                 "No student should have a literature class");
+    }
+
+    @Test
+    void studentInformation() {
+        // obtendo o boletim escolar
+        GradeBookCollegeStudent collegeStudent = studentCore.studentInformation(1);
+
+        assertNotNull(collegeStudent);
+        assertEquals(1, collegeStudent.getId());
+        assertEquals("Lon", collegeStudent.getFirstname());
+        assertEquals("Hammond", collegeStudent.getLastname());
+        assertEquals("lon.hammond@luv2code_school.com", collegeStudent.getEmailAddress());
+        assertTrue(collegeStudent.getStudentGrades().getMathGradeResults().size() == 1);
+        assertTrue(collegeStudent.getStudentGrades().getScienceGradeResults().size() == 1);
+        assertTrue(collegeStudent.getStudentGrades().getHistoryGradeResults().size() == 1);
     }
 
     @AfterEach
