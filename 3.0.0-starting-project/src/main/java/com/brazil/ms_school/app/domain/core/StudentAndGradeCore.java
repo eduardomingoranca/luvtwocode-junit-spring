@@ -139,6 +139,11 @@ public class StudentAndGradeCore {
     }
 
     public GradeBookCollegeStudent studentInformation(int id) {
+
+        if (!checkIfStudentIsNull(id)) {
+            return null;
+        }
+
         // recuperando o aluno do banco de dados
         Optional<CollegeStudent> student = studentRepositoryPort.findById(id);
 

@@ -173,7 +173,7 @@ class StudentAndGradeCoreTest {
     }
 
     @Test
-    void studentInformation() {
+    void studentInformationService() {
         // obtendo o boletim escolar
         GradeBookCollegeStudent collegeStudent = studentCore.studentInformation(1);
 
@@ -185,6 +185,12 @@ class StudentAndGradeCoreTest {
         assertTrue(collegeStudent.getStudentGrades().getMathGradeResults().size() == 1);
         assertTrue(collegeStudent.getStudentGrades().getScienceGradeResults().size() == 1);
         assertTrue(collegeStudent.getStudentGrades().getHistoryGradeResults().size() == 1);
+    }
+
+    @Test
+    void studentInformationServiceReturnNull() {
+        GradeBookCollegeStudent collegeStudent = studentCore.studentInformation(0);
+        assertNull(collegeStudent);
     }
 
     @AfterEach
