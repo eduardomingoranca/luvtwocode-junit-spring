@@ -61,11 +61,11 @@ class StudentAndGradeCoreTest {
         jdbcTemplate.execute("insert into student(id, email_address, firstname, lastname)" +
                 "values (1, 'lon.hammond@luv2code_school.com', 'Lon', 'Hammond')");
 
-        jdbcTemplate.execute("insert into math_grade(grade, student_id) values (100.0, 1)");
+        jdbcTemplate.execute("insert into math_grade(id, grade, student_id) values (1, 100.0, 1)");
 
-        jdbcTemplate.execute("insert into science_grade(grade, student_id) values (100.0, 1)");
+        jdbcTemplate.execute("insert into science_grade(id, grade, student_id) values (1, 100.0, 1)");
 
-        jdbcTemplate.execute("insert into history_grade(grade, student_id) values (100.0, 1)");
+        jdbcTemplate.execute("insert into history_grade(id, grade, student_id) values (1, 100.0, 1)");
     }
 
     @Test
@@ -143,6 +143,12 @@ class StudentAndGradeCoreTest {
         assertFalse(studentCore.createGrade(-5, 1, "math"));
         assertFalse(studentCore.createGrade(80.5, 2, "math"));
         assertFalse(studentCore.createGrade(80.5, 1, "literature"));
+    }
+
+    @Test
+    void deleteGradeService() {
+        assertEquals(1, studentCore.deleteGrade(1, "math"),
+                "Returns student id after delete");
     }
 
     @AfterEach

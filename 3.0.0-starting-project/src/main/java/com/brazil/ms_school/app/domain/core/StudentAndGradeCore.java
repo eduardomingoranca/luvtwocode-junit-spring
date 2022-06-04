@@ -106,4 +106,18 @@ public class StudentAndGradeCore {
         return false;
     }
 
+    public int deleteGrade(int id, String gradeType) {
+         int studentId = 0;
+
+         if (gradeType.equals("math")) {
+             Optional<MathGrade> grade = mathGradesPort.findById(id);
+             if (!grade.isPresent()) {
+                 return studentId;
+             }
+             studentId = grade.get().getStudentId();
+             mathGradesPort.deleteById(id);
+         }
+
+         return studentId;
+    }
 }
