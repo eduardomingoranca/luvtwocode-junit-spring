@@ -3,6 +3,7 @@ package com.brazil.ms_school.app.adapter;
 import com.brazil.ms_school.app.domain.core.StudentAndGradeCore;
 import com.brazil.ms_school.app.domain.model.CollegeStudent;
 import com.brazil.ms_school.app.domain.model.GradeBook;
+import com.brazil.ms_school.app.domain.model.GradeBookCollegeStudent;
 import com.brazil.ms_school.app.port.in.GradeBookPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -63,6 +64,38 @@ public class GradeBookAdapter implements GradeBookPort {
     @Override
     @GetMapping("/studentInformation/{id}")
     public String studentInformation(@PathVariable int id, Model m) {
+
+        if (!studentCore.checkIfStudentIsNull(id)) {
+            return "error";
+        }
+
+        GradeBookCollegeStudent collegeStudent = studentCore.studentInformation(id);
+
+        m.addAttribute("student", collegeStudent);
+        if (collegeStudent.getStudentGrades().getMathGradeResults().size() > 0) {
+            m.addAttribute("mathAverage", collegeStudent.getStudentGrades().findGradePointAverage(
+                    collegeStudent.getStudentGrades().getMathGradeResults()
+            ));
+        } else {
+            m.addAttribute("mathAverage", "N/A");
+        }
+
+        if (collegeStudent.getStudentGrades().getScienceGradeResults().size() > 0) {
+            m.addAttribute("scienceAverage", collegeStudent.getStudentGrades().findGradePointAverage(
+                    collegeStudent.getStudentGrades().getScienceGradeResults()
+            ));
+        } else {
+            m.addAttribute("scienceAverage", "N/A");
+        }
+
+        if (collegeStudent.getStudentGrades().getHistoryGradeResults().size() > 0) {
+            m.addAttribute("historyAverage", collegeStudent.getStudentGrades().findGradePointAverage(
+                    collegeStudent.getStudentGrades().getHistoryGradeResults()
+            ));
+        } else {
+            m.addAttribute("historyAverage", "N/A");
+        }
+
         return "studentInformation";
     }
 
