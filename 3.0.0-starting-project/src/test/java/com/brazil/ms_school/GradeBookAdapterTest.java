@@ -1,9 +1,9 @@
 package com.brazil.ms_school;
 
+import com.brazil.ms_school.app.domain.core.StudentAndGradeCore;
 import com.brazil.ms_school.app.domain.model.CollegeStudent;
 import com.brazil.ms_school.app.domain.model.GradeBookCollegeStudent;
 import com.brazil.ms_school.app.port.out.StudentRepositoryPort;
-import com.brazil.ms_school.app.domain.core.StudentAndGradeCore;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -52,6 +52,9 @@ class GradeBookAdapterTest {
 
     @Autowired
     private StudentRepositoryPort studentRepositoryPort;
+
+    @Autowired
+    private StudentAndGradeCore studentCore;
 
     @Value("${sql.script.create.student}")
     private String sqlAddStudent;
@@ -202,6 +205,32 @@ class GradeBookAdapterTest {
         ModelAndView mav = mvcResult.getModelAndView();
 
         assertViewName(mav, "error");
+    }
+
+    @Test
+    void createValidGradeHttpRequest() throws Exception {
+        assertTrue(studentRepositoryPort.findById(1).isPresent());
+
+        GradeBookCollegeStudent student = studentCore.studentInformation(1);
+
+        assertEquals(1, student.getStudentGrades().getMathGradeResults().size());
+
+        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders
+                .post("/grades")
+                .contentType(APPLICATION_JSON)
+                .param("grade", "85.00")
+                .param("gradeType", "math")
+                .param("studentId", "1"))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        ModelAndView mav = mvcResult.getModelAndView();
+
+        assertViewName(mav, "studentInformation");
+
+        student = studentCore.studentInformation(1);
+
+        assertEquals(2, student.getStudentGrades().getMathGradeResults().size());
     }
 
     @AfterEach

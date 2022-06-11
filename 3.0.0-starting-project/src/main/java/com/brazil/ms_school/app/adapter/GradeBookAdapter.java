@@ -99,4 +99,51 @@ public class GradeBookAdapter implements GradeBookPort {
         return "studentInformation";
     }
 
+    @PostMapping(value = "/grades")
+    public String createGrade(@RequestParam("grade") double grade,
+                              @RequestParam("gradeType") String gradeType,
+                              @RequestParam("studentId") int studentId,
+                              Model m) {
+
+        if (!studentCore.checkIfStudentIsNull(studentId)) {
+            return "error";
+        }
+
+        boolean success = studentCore.createGrade(grade, studentId, gradeType);
+
+        if (!success) {
+            return "error";
+        }
+
+        GradeBookCollegeStudent collegeStudent = studentCore.studentInformation(studentId);
+
+        m.addAttribute("student", collegeStudent);
+        if (collegeStudent.getStudentGrades().getMathGradeResults().size() > 0) {
+            m.addAttribute("mathAverage", collegeStudent.getStudentGrades().findGradePointAverage(
+                    collegeStudent.getStudentGrades().getMathGradeResults()
+            ));
+        } else {
+            m.addAttribute("mathAverage", "N/A");
+        }
+
+        if (collegeStudent.getStudentGrades().getScienceGradeResults().size() > 0) {
+            m.addAttribute("scienceAverage", collegeStudent.getStudentGrades().findGradePointAverage(
+                    collegeStudent.getStudentGrades().getScienceGradeResults()
+            ));
+        } else {
+            m.addAttribute("scienceAverage", "N/A");
+        }
+
+        if (collegeStudent.getStudentGrades().getHistoryGradeResults().size() > 0) {
+            m.addAttribute("historyAverage", collegeStudent.getStudentGrades().findGradePointAverage(
+                    collegeStudent.getStudentGrades().getHistoryGradeResults()
+            ));
+        } else {
+            m.addAttribute("historyAverage", "N/A");
+        }
+
+        return "studentInformation";
+    }
+    
+
 }
