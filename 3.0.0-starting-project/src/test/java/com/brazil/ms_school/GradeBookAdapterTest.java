@@ -305,6 +305,17 @@ class GradeBookAdapterTest {
         assertViewName(mav, "error");
     }
 
+    @Test
+    void deleteANonValidGradeHttpRequest() throws Exception {
+        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders
+                        .get("/grades/{id}/{gradeType}", 1, "literature"))
+                .andExpect(status().isOk()).andReturn();
+
+        ModelAndView mav = mvcResult.getModelAndView();
+
+        assertViewName(mav, "error");
+    }
+
     @AfterEach
     void setupAfterTransaction() {
         jdbcTemplate.execute(sqlDeleteStudent);
