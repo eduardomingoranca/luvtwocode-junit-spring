@@ -54,17 +54,17 @@ class StudentAndGradeCoreTest {
     @Autowired
     private HistoryGradesPort historyGradesPort;
 
-    @Value("${sql.scripts.create.student}")
+    @Value("${sql.script.create.student}")
     private String sqlAddStudent;
 
     @Value("${sql.script.create.math.grade}")
-    private String sqlAddMathStudent;
+    private String sqlAddMathGrade;
 
     @Value("${sql.script.create.science.grade}")
-    private String sqlAddScienceStudent;
+    private String sqlAddScienceGrade;
 
     @Value("${sql.script.create.history.grade}")
-    private String sqlAddHistoryStudent;
+    private String sqlAddHistoryGrade;
 
     @Value("${sql.script.delete.student}")
     private String sqlDeleteStudent;
@@ -77,28 +77,24 @@ class StudentAndGradeCoreTest {
 
     @Value("${sql.script.delete.history.grade}")
     private String sqlDeleteHistoryGrade;
-    
+
     @BeforeEach
     void setupDatabase() {
-        jdbcTemplate.execute("insert into student(id, email_address, firstname, lastname)" +
-                "values (1, 'lon.hammond@luv2code_school.com', 'Lon', 'Hammond')");
-
-        jdbcTemplate.execute("insert into math_grade(id, grade, student_id) values (1, 100.0, 1)");
-
-        jdbcTemplate.execute("insert into science_grade(id, grade, student_id) values (1, 100.0, 1)");
-
-        jdbcTemplate.execute("insert into history_grade(id, grade, student_id) values (1, 100.0, 1)");
+        jdbcTemplate.execute(sqlAddStudent);
+        jdbcTemplate.execute(sqlAddMathGrade);
+        jdbcTemplate.execute(sqlAddScienceGrade);
+        jdbcTemplate.execute(sqlAddHistoryGrade);
     }
 
     @Test
     void createStudentService() {
-        studentCore.createStudent("Noah", "Calhoun",
-                "noah.calhoun@luv2code_school.com");
+        studentCore.createStudent("Isaac", "Cohen",
+                "isaac.cohen@luv2code_school.com");
 
         CollegeStudent student = studentRepositoryPort
-                .findByEmailAddress("noah.calhoun@luv2code_school.com");
+                .findByEmailAddress("isaac.cohen@luv2code_school.com");
 
-        assertEquals("noah.calhoun@luv2code_school.com",
+        assertEquals("isaac.cohen@luv2code_school.com",
                 student.getEmailAddress(), "find by email");
     }
 
@@ -204,9 +200,9 @@ class StudentAndGradeCoreTest {
 
         assertNotNull(collegeStudent);
         assertEquals(1, collegeStudent.getId());
-        assertEquals("Lon", collegeStudent.getFirstname());
-        assertEquals("Hammond", collegeStudent.getLastname());
-        assertEquals("lon.hammond@luv2code_school.com", collegeStudent.getEmailAddress());
+        assertEquals("Joseph", collegeStudent.getFirstname());
+        assertEquals("Mizrahi", collegeStudent.getLastname());
+        assertEquals("joseph.mizrahi@luv2code_school.com", collegeStudent.getEmailAddress());
         assertTrue(collegeStudent.getStudentGrades().getMathGradeResults().size() == 1);
         assertTrue(collegeStudent.getStudentGrades().getScienceGradeResults().size() == 1);
         assertTrue(collegeStudent.getStudentGrades().getHistoryGradeResults().size() == 1);
@@ -220,10 +216,10 @@ class StudentAndGradeCoreTest {
 
     @AfterEach
     void setupAfterTransaction() {
-        jdbcTemplate.execute("DELETE FROM student");
-        jdbcTemplate.execute("DELETE FROM math_grade");
-        jdbcTemplate.execute("DELETE FROM science_grade");
-        jdbcTemplate.execute("DELETE FROM history_grade");
+        jdbcTemplate.execute(sqlDeleteStudent);
+        jdbcTemplate.execute(sqlDeleteMathGrade);
+        jdbcTemplate.execute(sqlDeleteScienceGrade);
+        jdbcTemplate.execute(sqlDeleteHistoryGrade);
     }
 
 }

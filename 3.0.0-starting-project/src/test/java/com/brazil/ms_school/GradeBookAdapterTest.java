@@ -10,6 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -52,6 +53,30 @@ class GradeBookAdapterTest {
     @Autowired
     private StudentRepositoryPort studentRepositoryPort;
 
+    @Value("${sql.script.create.student}")
+    private String sqlAddStudent;
+
+    @Value("${sql.script.create.math.grade}")
+    private String sqlAddMathGrade;
+
+    @Value("${sql.script.create.science.grade}")
+    private String sqlAddScienceGrade;
+
+    @Value("${sql.script.create.history.grade}")
+    private String sqlAddHistoryGrade;
+
+    @Value("${sql.script.delete.student}")
+    private String sqlDeleteStudent;
+
+    @Value("${sql.script.delete.math.grade}")
+    private String sqlDeleteMathGrade;
+
+    @Value("${sql.script.delete.science.grade}")
+    private String sqlDeleteScienceGrade;
+
+    @Value("${sql.script.delete.history.grade}")
+    private String sqlDeleteHistoryGrade;
+
     @BeforeAll
     static void setup() {
         /*
@@ -59,24 +84,26 @@ class GradeBookAdapterTest {
           esta solicitacao com alguns dados.
          */
         request = new MockHttpServletRequest();
-        request.setParameter("firstname", "Noah");
-        request.setParameter("lastname", "Calhoun");
-        request.setParameter("emailAddress", "noah.calhoun@luv2code_school.com");
+        request.setParameter("firstname", "Issac");
+        request.setParameter("lastname", "Cohen");
+        request.setParameter("emailAddress", "isaac.cohen@luv2code_school.com");
     }
 
     @BeforeEach
     void beforeEach() {
-        jdbcTemplate.execute("insert into student(id, email_address, firstname, lastname)" +
-                "values (1, 'lon.hammond@luv2code_school.com', 'Lon', 'Hammond')");
+        jdbcTemplate.execute(sqlAddStudent);
+        jdbcTemplate.execute(sqlAddMathGrade);
+        jdbcTemplate.execute(sqlAddScienceGrade);
+        jdbcTemplate.execute(sqlAddHistoryGrade);
     }
 
     @Test
     void getStudentsHttpRequest() throws Exception {
-        CollegeStudent studentOne = new GradeBookCollegeStudent("Lon", "Hammond",
-                "lon_hammond@luv2code_school.com");
+        CollegeStudent studentOne = new GradeBookCollegeStudent("Joseph", "Mizrahi",
+                "joseph_mizrahi@luv2code_school.com");
 
-        CollegeStudent studentTwo = new GradeBookCollegeStudent("Noah", "Calhoun",
-                "noah_calhoun@luv2code_school.com");
+        CollegeStudent studentTwo = new GradeBookCollegeStudent("Isaac", "Cohen",
+                "isaac_cohen@luv2code_school.com");
 
         List<CollegeStudent> collegeStudentList = new ArrayList<>(asList(studentOne, studentTwo));
 
@@ -96,8 +123,8 @@ class GradeBookAdapterTest {
     @Test
     void createStudentHttpRequest() throws Exception {
 
-        CollegeStudent studentOne = new CollegeStudent("Lon", "Hammond",
-                "lon_hammond@luv2code_school.com");
+        CollegeStudent studentOne = new CollegeStudent("Joseph", "Mizrahi",
+                "joseph_mizrahi@luv2code_school.com");
 
         List<CollegeStudent> collegeStudentList = new ArrayList<>(asList(studentOne));
 
@@ -118,7 +145,7 @@ class GradeBookAdapterTest {
 
         // buscando o aluno pelo endereco de email
         CollegeStudent verifyStudent = studentRepositoryPort
-                .findByEmailAddress("noah.calhoun@luv2code_school.com");
+                .findByEmailAddress("isaac.cohen@luv2code_school.com");
 
         // verificando se o aluno existe
         assertNotNull(verifyStudent, "Student should be found");
@@ -153,6 +180,9 @@ class GradeBookAdapterTest {
 
     @AfterEach
     void setupAfterTransaction() {
-        jdbcTemplate.execute("DELETE FROM student");
+        jdbcTemplate.execute(sqlDeleteStudent);
+        jdbcTemplate.execute(sqlDeleteMathGrade);
+        jdbcTemplate.execute(sqlDeleteScienceGrade);
+        jdbcTemplate.execute(sqlDeleteHistoryGrade);
     }
 }
