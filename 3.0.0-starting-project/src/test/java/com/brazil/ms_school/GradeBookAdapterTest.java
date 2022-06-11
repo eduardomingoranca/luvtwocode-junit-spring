@@ -35,8 +35,8 @@ import static org.springframework.test.web.ModelAndViewAssert.assertViewName;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-// buscando as propriedades no arquivo application.properties
-@TestPropertySource("/application.properties")
+// buscando as propriedades no arquivo application_test.properties
+@TestPropertySource("/application_test.properties")
 // configurando o mockmvc
 @AutoConfigureMockMvc
 @SpringBootTest

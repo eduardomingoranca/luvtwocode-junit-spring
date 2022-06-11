@@ -25,9 +25,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /*
  permite carregar propriedades durante o teste, neste caso
- sera referenciado a application.properties.
+ sera referenciado a application_test.properties.
  */
-@TestPropertySource("/application.properties")
+@TestPropertySource("/application_test.properties")
 @SpringBootTest
 class StudentAndGradeCoreTest {
 
