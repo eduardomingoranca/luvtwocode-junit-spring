@@ -94,6 +94,19 @@ public class GradeBookAdapter implements GradeBookPort {
 
         return "studentInformation";
     }
-    
+
+    @GetMapping("/grades/{id}/{gradeType}")
+    public String deleteGrade(@PathVariable int id, @PathVariable String gradeType, Model m) {
+        
+        int studentId = studentCore.deleteGrade(id, gradeType);
+
+        if (studentId == 0) {
+            return "error";
+        }
+
+        studentCore.configureStudentInformationModel(studentId, m);
+
+        return "studentInformation";
+    }
 
 }

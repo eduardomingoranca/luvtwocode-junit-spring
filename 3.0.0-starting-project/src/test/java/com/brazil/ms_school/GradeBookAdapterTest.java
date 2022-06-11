@@ -3,6 +3,8 @@ package com.brazil.ms_school;
 import com.brazil.ms_school.app.domain.core.StudentAndGradeCore;
 import com.brazil.ms_school.app.domain.model.CollegeStudent;
 import com.brazil.ms_school.app.domain.model.GradeBookCollegeStudent;
+import com.brazil.ms_school.app.domain.model.MathGrade;
+import com.brazil.ms_school.app.port.out.MathGradesPort;
 import com.brazil.ms_school.app.port.out.StudentRepositoryPort;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -23,6 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static java.util.Arrays.asList;
 import static org.junit.jupiter.api.Assertions.*;
@@ -55,6 +58,9 @@ class GradeBookAdapterTest {
 
     @Autowired
     private StudentAndGradeCore studentCore;
+
+    @Autowired
+    private MathGradesPort mathGradesPort;
 
     @Value("${sql.script.create.student}")
     private String sqlAddStudent;
@@ -135,7 +141,7 @@ class GradeBookAdapterTest {
 
         assertIterableEquals(collegeStudentList, studentCreateCoreMock.getGradeBook());
 
-        MvcResult mvcResult = this.mockMvc.perform(post("/")
+        MvcResult mvcResult = mockMvc.perform(post("/")
                         .contentType(APPLICATION_JSON)
                         .param("firstname", request.getParameterValues("firstname"))
                         .param("lastname", request.getParameterValues("lastname"))
@@ -263,6 +269,25 @@ class GradeBookAdapterTest {
         ModelAndView mav = mvcResult.getModelAndView();
 
         assertViewName(mav, "error");
+    }
+
+    @Test
+    void deleteAValidGradeHttpRequest() throws Exception {
+        Optional<MathGrade> mathGrade = mathGradesPort.findById(1);
+
+        assertTrue(mathGrade.isPresent());
+
+        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders
+                        .get("/grades/{id}/{gradeType}", 1, "math"))
+                .andExpect(status().isOk()).andReturn();
+
+        ModelAndView mav = mvcResult.getModelAndView();
+
+        assertViewName(mav, "studentInformation");
+
+        mathGrade = mathGradesPort.findById(1);
+
+        assertFalse(mathGrade.isPresent());
     }
 
     @AfterEach
