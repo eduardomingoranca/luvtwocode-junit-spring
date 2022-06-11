@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -174,6 +175,36 @@ public class StudentAndGradeCore {
                 studentGradesCore);
 
         return gradeBookCollegeStudent;
+    }
+
+    public void configureStudentInformationModel(int id, Model m) {
+        GradeBookCollegeStudent collegeStudent = studentInformation(id);
+
+        m.addAttribute("student", collegeStudent);
+        if (collegeStudent.getStudentGrades().getMathGradeResults().size() > 0) {
+            m.addAttribute("mathAverage", collegeStudent.getStudentGrades().findGradePointAverage(
+                    collegeStudent.getStudentGrades().getMathGradeResults()
+            ));
+        } else {
+            m.addAttribute("mathAverage", "N/A");
+        }
+
+        if (collegeStudent.getStudentGrades().getScienceGradeResults().size() > 0) {
+            m.addAttribute("scienceAverage", collegeStudent.getStudentGrades().findGradePointAverage(
+                    collegeStudent.getStudentGrades().getScienceGradeResults()
+            ));
+        } else {
+            m.addAttribute("scienceAverage", "N/A");
+        }
+
+        if (collegeStudent.getStudentGrades().getHistoryGradeResults().size() > 0) {
+            m.addAttribute("historyAverage", collegeStudent.getStudentGrades().findGradePointAverage(
+                    collegeStudent.getStudentGrades().getHistoryGradeResults()
+            ));
+        } else {
+            m.addAttribute("historyAverage", "N/A");
+        }
+
     }
 
 }
