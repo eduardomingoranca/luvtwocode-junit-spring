@@ -14,8 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
-import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.*;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 @RestController
@@ -50,16 +49,15 @@ public class GradeBookAdapter implements GradeBookPort {
 
 
     @PostMapping(value = "/")
-    public List<GradeBookCollegeStudent> createStudent(@RequestBody CollegeStudent student) {
-
+    public ResponseEntity<List<GradeBookCollegeStudent>> createStudent(@RequestBody CollegeStudent student) {
         studentCore.createStudent(student.getFirstname(), student.getLastname(), student.getEmailAddress());
         gradeBook = studentCore.getGradeBook();
-        return gradeBook.getStudents();
+        return new ResponseEntity<>(gradeBook.getStudents(), CREATED);
     }
 
 
     @DeleteMapping("/student/{id}")
-    public List<GradeBookCollegeStudent> deleteStudent(@PathVariable int id) {
+    public ResponseEntity<Object> deleteStudent(@PathVariable int id) {
 
         if (!studentCore.checkIfStudentIsNull(id)) {
             throw new StudentOrGradeNotFoundException("Student or Grade was not found");
@@ -67,7 +65,7 @@ public class GradeBookAdapter implements GradeBookPort {
 
         studentCore.deleteStudent(id);
         gradeBook = studentCore.getGradeBook();
-        return gradeBook.getStudents();
+        return new ResponseEntity<>(NO_CONTENT);
     }
 
 

@@ -27,10 +27,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import static org.hamcrest.Matchers.hasSize;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @TestPropertySource("/application-test.properties")
@@ -138,13 +137,22 @@ class GradeBookAdapterTest {
         mockMvc.perform(post("/")
                 .contentType(APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(collegeStudent)))
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andExpect(jsonPath("$", hasSize(2)));
 
         CollegeStudent verifyStudent = studentDaoPort.findByEmailAddress("paul_hammond@luv2code.com");
         assertNotNull(verifyStudent, "Student should be valid");
     }
 
+    @Test
+    void deleteStudentHttpRequest() throws Exception {
+        assertTrue(studentDaoPort.findById(1).isPresent());
+
+        mockMvc.perform(delete("/student/{id}", 1))
+                .andExpect(status().isNoContent());
+
+        assertFalse(studentDaoPort.findById(1).isPresent());
+    }
     @AfterEach
     void setupAfterTransaction() {
         jdbc.execute(sqlDeleteStudent);

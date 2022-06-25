@@ -13,9 +13,9 @@ public interface GradeBookPort {
 
     GradeBookCollegeStudent studentInformation(int id);
 
-    List<GradeBookCollegeStudent> createStudent(CollegeStudent student);
+    ResponseEntity<List<GradeBookCollegeStudent>> createStudent(CollegeStudent student);
 
-    List<GradeBookCollegeStudent> deleteStudent(int id);
+    ResponseEntity<Object> deleteStudent(int id);
 
     GradeBookCollegeStudent createGrade(double grade, String gradeType, int studentId);
 
