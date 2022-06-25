@@ -27,6 +27,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -152,6 +153,16 @@ class GradeBookAdapterTest {
                 .andExpect(status().isNoContent());
 
         assertFalse(studentDaoPort.findById(1).isPresent());
+    }
+
+    @Test
+    void deleteStudentHttpRequestErrorPage() throws Exception {
+        assertFalse(studentDaoPort.findById(0).isPresent());
+
+        mockMvc.perform(delete("/student/{id}", 0))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.status", is(404)))
+                .andExpect(jsonPath("$.message", is("Student or Grade was not found")));
     }
     @AfterEach
     void setupAfterTransaction() {
