@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,6 +25,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+
+import static org.hamcrest.Matchers.hasSize;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @TestPropertySource("/application-test.properties")
 @AutoConfigureMockMvc
@@ -107,7 +112,21 @@ class GradeBookAdapterTest {
         jdbc.execute(sqlAddScienceGrade);
         jdbc.execute(sqlAddHistoryGrade);
     }
-    
+
+    @Test
+    void getStudentsHttpRequest() throws Exception {
+
+        collegeStudent.setFirstname("Paul");
+        collegeStudent.setLastname("Hammond");
+        entityManager.persist(collegeStudent);
+        entityManager.flush();
+
+        mockMvc.perform(get("/"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("$", hasSize(2)));
+    }
+
     @AfterEach
     void setupAfterTransaction() {
         jdbc.execute(sqlDeleteStudent);
