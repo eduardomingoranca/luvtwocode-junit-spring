@@ -221,6 +221,18 @@ class GradeBookAdapterTest {
                 .andExpect(jsonPath("$.status", is(404)))
                 .andExpect(jsonPath("$.message", is("Student or Grade was not found")));
     }
+
+    @Test
+    void createANonValidGradeHttpRequestGradeTypeDoesNotExistEmptyResponse() throws Exception {
+        this.mockMvc.perform(post("/grades")
+                        .contentType(APPLICATION_JSON)
+                        .param("grade", "85.00")
+                        .param("gradeType", "literature")
+                        .param("studentId", "1"))
+                            .andExpect(status().isNotFound())
+                            .andExpect(jsonPath("$.status", is(404)))
+                            .andExpect(jsonPath("$.message", is("Student or Grade was not found")));
+    }
     @AfterEach
     void setupAfterTransaction() {
         jdbc.execute(sqlDeleteStudent);
