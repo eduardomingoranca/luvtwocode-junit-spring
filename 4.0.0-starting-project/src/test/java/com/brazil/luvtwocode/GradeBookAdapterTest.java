@@ -209,6 +209,18 @@ class GradeBookAdapterTest {
                 .andExpect(jsonPath("$.emailAddress", is("lon.hammond@luv2code_school.com")))
                 .andExpect(jsonPath("$.studentGrades.mathGradeResults", hasSize(2)));
     }
+
+    @Test
+    void createAValidGradeHttpRequestStudentDoesNotExistEmptyResponse() throws Exception {
+        this.mockMvc.perform(post("/grades")
+                .contentType(APPLICATION_JSON)
+                .param("grade", "85.00")
+                .param("gradeType", "math")
+                .param("studentId", "0"))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.status", is(404)))
+                .andExpect(jsonPath("$.message", is("Student or Grade was not found")));
+    }
     @AfterEach
     void setupAfterTransaction() {
         jdbc.execute(sqlDeleteStudent);
