@@ -19,7 +19,7 @@ public interface GradeBookPort {
 
     ResponseEntity<GradeBookCollegeStudent> createGrade(double grade, String gradeType, int studentId);
 
-    GradeBookCollegeStudent deleteGrade(int id, String gradeType);
+    ResponseEntity<GradeBookCollegeStudent> deleteGrade(int id, String gradeType);
 
     ResponseEntity<StudentOrGradeErrorResponse> handleException(StudentOrGradeNotFoundException exc);
 

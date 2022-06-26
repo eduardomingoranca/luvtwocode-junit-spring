@@ -94,7 +94,7 @@ public class GradeBookAdapter implements GradeBookPort {
     }
 
     @DeleteMapping("/grades/{id}/{gradeType}")
-    public GradeBookCollegeStudent deleteGrade(@PathVariable int id, @PathVariable String gradeType) {
+    public ResponseEntity<GradeBookCollegeStudent> deleteGrade(@PathVariable int id, @PathVariable String gradeType) {
 
         int studentId = studentCore.deleteGrade(id, gradeType);
 
@@ -102,9 +102,9 @@ public class GradeBookAdapter implements GradeBookPort {
             throw new StudentOrGradeNotFoundException("Student or Grade was not found");
         }
 
-        GradeBookCollegeStudent studentEntity = studentCore.studentInformation(studentId);
+        studentCore.studentInformation(studentId);
 
-        return studentEntity;
+        return new ResponseEntity<>(NO_CONTENT);
     }
 
     @ExceptionHandler

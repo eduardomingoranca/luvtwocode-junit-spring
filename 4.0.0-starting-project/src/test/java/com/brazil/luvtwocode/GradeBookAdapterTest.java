@@ -2,6 +2,7 @@ package com.brazil.luvtwocode;
 
 import com.brazil.luvtwocode.domain.core.StudentAndGradeCore;
 import com.brazil.luvtwocode.domain.model.CollegeStudent;
+import com.brazil.luvtwocode.domain.model.MathGrade;
 import com.brazil.luvtwocode.port.out.HistoryGradesDaoPort;
 import com.brazil.luvtwocode.port.out.MathGradesDaoPort;
 import com.brazil.luvtwocode.port.out.ScienceGradesDaoPort;
@@ -232,6 +233,16 @@ class GradeBookAdapterTest {
                             .andExpect(status().isNotFound())
                             .andExpect(jsonPath("$.status", is(404)))
                             .andExpect(jsonPath("$.message", is("Student or Grade was not found")));
+    }
+
+    @Test
+    void deleteAValidGradeHttpRequest() throws Exception {
+        Optional<MathGrade> mathGrade = mathGradesDaoPort.findById(1);
+
+        assertTrue(mathGrade.isPresent());
+
+        mockMvc.perform(delete("/grades/{id}/{gradeType}", 1, "math"))
+                .andExpect(status().isNoContent());
     }
     @AfterEach
     void setupAfterTransaction() {
