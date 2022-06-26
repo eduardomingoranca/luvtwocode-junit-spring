@@ -181,6 +181,18 @@ class GradeBookAdapterTest {
                 .andExpect(jsonPath("$.lastname", is("Hammond")))
                 .andExpect(jsonPath("$.emailAddress", is("lon.hammond@luv2code_school.com")));
     }
+
+    @Test
+    void studentInformationHttpRequestEmptyResponse() throws Exception {
+        Optional<CollegeStudent> student = studentDaoPort.findById(0);
+
+        assertFalse(student.isPresent());
+
+        mockMvc.perform(get("/studentInformation/{id}", 0))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.status", is(404)))
+                .andExpect(jsonPath("$.message", is("Student or Grade was not found")));
+    }
     @AfterEach
     void setupAfterTransaction() {
         jdbc.execute(sqlDeleteStudent);
