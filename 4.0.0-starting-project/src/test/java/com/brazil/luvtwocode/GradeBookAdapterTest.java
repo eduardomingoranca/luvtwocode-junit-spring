@@ -244,6 +244,14 @@ class GradeBookAdapterTest {
         mockMvc.perform(delete("/grades/{id}/{gradeType}", 1, "math"))
                 .andExpect(status().isNoContent());
     }
+
+    @Test
+    void deleteAValidGradeHttpRequestStudentIdDoesNotExistEmptyResponse() throws Exception {
+        mockMvc.perform(delete("/grades/{id}/{gradeType}", 2, "history"))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.status", is(404)))
+                .andExpect(jsonPath("$.message", is("Student or Grade was not found")));
+    }
     @AfterEach
     void setupAfterTransaction() {
         jdbc.execute(sqlDeleteStudent);
