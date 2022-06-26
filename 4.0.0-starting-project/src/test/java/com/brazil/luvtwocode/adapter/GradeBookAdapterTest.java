@@ -1,4 +1,4 @@
-package com.brazil.luvtwocode;
+package com.brazil.luvtwocode.adapter;
 
 import com.brazil.luvtwocode.domain.core.StudentAndGradeCore;
 import com.brazil.luvtwocode.domain.model.CollegeStudent;
