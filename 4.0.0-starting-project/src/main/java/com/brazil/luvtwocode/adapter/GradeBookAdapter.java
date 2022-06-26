@@ -70,9 +70,9 @@ public class GradeBookAdapter implements GradeBookPort {
 
 
     @PostMapping(value = "/grades")
-    public GradeBookCollegeStudent createGrade(@RequestParam("grade") double grade,
-                                               @RequestParam("gradeType") String gradeType,
-                                               @RequestParam("studentId") int studentId) {
+    public ResponseEntity<GradeBookCollegeStudent> createGrade(@RequestParam("grade") double grade,
+                                                               @RequestParam("gradeType") String gradeType,
+                                                               @RequestParam("studentId") int studentId) {
 
         if (!studentCore.checkIfStudentIsNull(studentId)) {
             throw new StudentOrGradeNotFoundException("Student or Grade was not found");
@@ -90,7 +90,7 @@ public class GradeBookAdapter implements GradeBookPort {
             throw new StudentOrGradeNotFoundException("Student or Grade was not found");
         }
 
-        return studentEntity;
+        return new ResponseEntity<>(studentEntity, CREATED);
     }
 
     @DeleteMapping("/grades/{id}/{gradeType}")

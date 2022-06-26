@@ -201,7 +201,7 @@ class GradeBookAdapterTest {
                 .param("grade", "85.00")
                 .param("gradeType", "math")
                 .param("studentId", "1"))
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andExpect(content().contentType(APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.id", is(1)))
                 .andExpect(jsonPath("$.firstname", is("Lon")))
